@@ -17,19 +17,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="rain" translatesAutoresizingMaskIntoConstraints="NO" id="JGg-vX-RJ9">
-                                <rect key="frame" x="87" y="124" width="240" height="128"/>
+                                <rect key="frame" x="87" y="124" width="240" height="120"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="JGg-vX-RJ9" secondAttribute="height" multiplier="15:8" id="pG2-nx-Ng0"/>
+                                    <constraint firstAttribute="width" secondItem="JGg-vX-RJ9" secondAttribute="height" multiplier="2:1" id="pG2-nx-Ng0"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalCompressionResistancePriority="1000" text="Carregando" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nWO-Gd-d9l">
-                                <rect key="frame" x="0.0" y="302" width="414" height="37"/>
+                                <rect key="frame" x="0.0" y="294" width="414" height="37"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="B4G-Ag-3eL">
-                                <rect key="frame" x="16" y="355" width="382" height="491"/>
+                                <rect key="frame" x="16" y="347" width="382" height="499"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>
@@ -53,11 +53,22 @@
                         <outlet property="tempLabel" destination="nWO-Gd-d9l" id="MNY-v7-vpv"/>
                         <outlet property="tempTable" destination="B4G-Ag-3eL" id="75R-AA-dmM"/>
                         <outlet property="weatherImage" destination="JGg-vX-RJ9" id="oXR-91-whF"/>
+                        <segue destination="y1o-0c-bE4" kind="show" identifier="goToTodayWeather" id="Ku5-nz-lOc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wBF-yd-pKc" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-65.217391304347828" y="-22.098214285714285"/>
+        </scene>
+        <!--TodayWeatherScreen-->
+        <scene sceneID="0sp-MX-jIS">
+            <objects>
+                <viewControllerPlaceholder storyboardName="TodayWeatherScreen" id="y1o-0c-bE4" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="4Fl-HN-aSM"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jbY-Y8-oUm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="809" y="-350"/>
         </scene>
     </scenes>
     <resources>

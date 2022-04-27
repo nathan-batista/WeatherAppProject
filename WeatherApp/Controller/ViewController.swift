@@ -25,10 +25,7 @@ class ViewController: UIViewController, UITableViewDataSource , UITableViewDeleg
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! DateTempTableViewCell
-        print(cell.tempImageView.frame.height)
-        for view in cell.tempStack.arrangedSubviews{
-            let newView = view as! UILabel
-        }
+        performSegue(withIdentifier: "goToTodayWeather", sender: indexPath)
     }
     
     
@@ -66,7 +63,18 @@ class ViewController: UIViewController, UITableViewDataSource , UITableViewDeleg
 
         // Do any additional setup after loading the view.
     }
-
+        
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToTodayWeather" {
+            if let destination = segue.destination as? TodayWeatherViewController,
+                let index = sender as? IndexPath{
+                let date = DateGetter().getCurrentDate()
+                let day = (date?[0] ?? 0) + index.row
+                destination.title = "Day \(day)"
+                destination.todayWeather = weather?.list[index.row*8]
+            }
+        }
+    }
     
     
     

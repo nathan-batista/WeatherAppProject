@@ -7,7 +7,13 @@
 
 import Foundation
 
-
+enum WeatherFields{
+    case temp_min
+    case temp_max
+    case humidity
+    case feels_like
+    case pressure
+}
 
 struct DateGetter {
     func getCurrentDate()-> [Int]?{

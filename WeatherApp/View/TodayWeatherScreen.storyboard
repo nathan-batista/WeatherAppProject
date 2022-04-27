@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Today Weather View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController id="Y6W-OH-hqX" customClass="TodayWeatherViewController" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oaF-BH-dwr">
+                                <rect key="frame" x="40" y="104" width="334" height="167"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="oaF-BH-dwr" secondAttribute="height" multiplier="2:1" id="Fhy-x6-7ga"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g0z-qi-Fvj">
+                                <rect key="frame" x="16" y="307" width="382" height="30"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="iIy-Hc-XOI">
+                                <rect key="frame" x="16" y="353" width="382" height="493"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="sectionIndexBackgroundColor" systemColor="systemTealColor"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" systemColor="systemTealColor"/>
+                        <constraints>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="oaF-BH-dwr" secondAttribute="trailing" constant="40" id="Bp1-tO-Hyk"/>
+                            <constraint firstItem="oaF-BH-dwr" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="60" id="GYR-iH-4o3"/>
+                            <constraint firstItem="oaF-BH-dwr" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="40" id="GZW-se-smO"/>
+                            <constraint firstItem="iIy-Hc-XOI" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="PUI-Vr-19o"/>
+                            <constraint firstItem="g0z-qi-Fvj" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="QCZ-0i-T4i"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="g0z-qi-Fvj" secondAttribute="trailing" constant="16" id="X5S-8G-08w"/>
+                            <constraint firstItem="oaF-BH-dwr" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="XNp-0Q-th3"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="iIy-Hc-XOI" secondAttribute="bottom" constant="16" id="bUZ-Ih-7yg"/>
+                            <constraint firstItem="iIy-Hc-XOI" firstAttribute="top" secondItem="g0z-qi-Fvj" secondAttribute="bottom" constant="16" id="fR4-im-ft9"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="iIy-Hc-XOI" secondAttribute="trailing" constant="16" id="hZT-2E-Tkg"/>
+                            <constraint firstItem="g0z-qi-Fvj" firstAttribute="top" secondItem="oaF-BH-dwr" secondAttribute="bottom" constant="36" id="yet-Pb-DPz"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="temp" destination="g0z-qi-Fvj" id="WPF-0h-Mn0"/>
+                        <outlet property="todayImage" destination="oaF-BH-dwr" id="k0Z-ak-TdW"/>
+                        <outlet property="todayTable" destination="iIy-Hc-XOI" id="qs2-hC-l2K"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="132" y="54"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemTealColor">
+            <color red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

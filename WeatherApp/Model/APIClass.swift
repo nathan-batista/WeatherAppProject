@@ -8,7 +8,14 @@
 import Foundation
 
 class API{
-    public func request(_ url:String, _ completionHandler: @escaping (WeatherAPIData?) ->Void){
+    public func tempRequest(_ latitude:Float,_ longitude:Float, completionHandler: @escaping (WeatherList?) -> Void){
+        let lat = String(format: "%.2f", latitude)
+        let lon = String(format: "%.2f", longitude)
+        let url = "https://api.openweathermap.org/data/2.5/forecast?lat=\(lat)&lon=\(lon)&appid=bd9d9e36d84edc52956d87da343a9e96&units=metric&lang=pt_br"
+        request(url, completionHandler)
+    }
+    
+    public func request(_ url:String, _ completionHandler: @escaping (WeatherList?) -> Void){
         let apiURL = URL(string: url)!
         
         let task = URLSession.shared.dataTask(with: apiURL, completionHandler: {
@@ -23,7 +30,7 @@ class API{
             }
             if let data = data{
                 do{
-                    let weatherData = try JSONDecoder().decode(WeatherAPIData.self, from: data)
+                    let weatherData = try JSONDecoder().decode(WeatherList.self, from: data)
                     completionHandler(weatherData)
                 }
                 catch{

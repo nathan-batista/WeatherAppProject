@@ -9,20 +9,59 @@ import Foundation
 
 
 
+struct DateGetter {
+    func getCurrentDate()-> [Int]?{
+        let date = Date()
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.day,.month], from: date)
+        if let day = components.day,let month = components.month{
+            return [day,month]
+        }
+        return nil
+    }
+}
+
+struct ImageGetter{
+    func getImage(_ weather:Weather) -> String{
+        var imageName = ""
+        if weather.main.lowercased() == "clear" {
+            imageName = "clear"
+        }
+        else if weather.main.lowercased() == "clouds" {
+            imageName = "clouds"
+        }
+        else {
+            imageName = "sun"
+        }
+        return imageName
+    }
+}
+
+
+
+struct WeatherList:Codable {
+    let cod:String
+    let message:Int
+    let cnt:Int
+    let list:[WeatherAPIData]
+    let country:String?
+    let population:Int?
+    let timezone:Int?
+    let sunrise:Int?
+    let sunset:Int?
+}
+
+
 struct WeatherAPIData:Codable{
-    let coord:Coordinates
-    let weather:[Weather]
-    let base:String
-    let main:MainData
-    let visibility:Int
-    let wind:WindStatus
-    let clouds:Clouds
     let dt:Int
-    let sys:SysData
-    let timezone:Int
-    let id:Int
-    let name:String
-    let cod:Int
+    let main:MainData
+    let weather:[Weather]
+    let clouds:Clouds
+    let wind:WindStatus
+    let visibility:Int
+    let pop:Float
+    let sys:SysDataAPI
+    let dt_txt:String
 }
 
 struct Coordinates : Codable {
@@ -43,12 +82,16 @@ struct MainData : Codable{
     let temp_min:Float
     let temp_max:Float
     let pressure:Int
+    let sea_level:Int
+    let grnd_level:Int
     let humidity:Int
+    let temp_kf:Float
 }
 
 struct WindStatus : Codable {
     let speed:Float
     let deg:Int
+    let gust:Float
 }
 
 struct Clouds : Codable {
@@ -62,4 +105,8 @@ struct SysData : Codable {
     let country:String
     let sunrise:Int
     let sunset:Int
+}
+
+struct SysDataAPI:Codable {
+    let pod:String
 }

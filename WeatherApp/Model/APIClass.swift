@@ -8,6 +8,7 @@
 import Foundation
 
 class API{
+    
     public func tempRequest(_ latitude:Float,_ longitude:Float, completionHandler: @escaping (WeatherList?) -> Void){
         let lat = String(format: "%.2f", latitude)
         let lon = String(format: "%.2f", longitude)

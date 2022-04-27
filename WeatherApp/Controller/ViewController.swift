@@ -29,6 +29,11 @@ class ViewController: UIViewController, UITableViewDataSource , UITableViewDeleg
             let newView = view as! UILabel
         }
     }
+    
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
    
     
     @IBOutlet weak var tempLabel: UILabel!
@@ -61,6 +66,9 @@ class ViewController: UIViewController, UITableViewDataSource , UITableViewDeleg
         // Do any additional setup after loading the view.
     }
 
+    
+    
+    
 
 }
 

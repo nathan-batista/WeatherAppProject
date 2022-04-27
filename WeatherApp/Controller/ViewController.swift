@@ -25,6 +25,7 @@ class ViewController: UIViewController, UITableViewDataSource , UITableViewDeleg
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! DateTempTableViewCell
+        print(cell.tempImageView.frame.height)
         for view in cell.tempStack.arrangedSubviews{
             let newView = view as! UILabel
         }

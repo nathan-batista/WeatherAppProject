@@ -8,7 +8,6 @@
 import Foundation
 
 
-
 struct WeatherAPIData:Codable{
     let coord:Coordinates
     let weather:[Weather]

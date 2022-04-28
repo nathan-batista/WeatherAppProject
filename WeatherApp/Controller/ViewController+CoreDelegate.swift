@@ -20,10 +20,9 @@ extension ViewController : CLLocationManagerDelegate {
         if !locations.isEmpty && coordinates == nil {
             coordinates = locations.first
             locationManager.stopUpdatingLocation()
-            let lat = String(format: "%.2f", coordinates!.coordinate.latitude)
-            let lon = String(format: "%.2f", coordinates!.coordinate.longitude)
-            let url = "https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&appid=bd9d9e36d84edc52956d87da343a9e96&units=metric&lang=pt_br"
-            APIController.request(url){ [weak self] weatherResponse in
+            let lat = coordinates!.coordinate.latitude
+            let lon = coordinates!.coordinate.longitude
+            APIController.request(Float(lat),Float(lon)){ [weak self] weatherResponse in
                 self?.weather = weatherResponse
                 DispatchQueue.main.async {
                     self?.reloadLabels()
@@ -33,10 +32,10 @@ extension ViewController : CLLocationManagerDelegate {
     }
     
     func reloadLabels() {
-        self.tempLabel.text = "\(weather!.main.temp)º"
-        self.sensacaoLabel.text = "\(weather!.main.temp)º"
-        self.minTempLabel.text = "\(weather!.main.temp_min)º"
-        self.maxTemplabel.text = "\(weather!.main.temp_max)º"
+        self.tempLabel.text = "\(Int(weather!.main.temp))º"
+        self.sensacaoLabel.text = "\(Int(weather!.main.temp))º"
+        self.minTempLabel.text = "\(Int(weather!.main.temp_min))º"
+        self.maxTemplabel.text = "\(Int(weather!.main.temp_max))º"
         self.pressureLabel.text = "\(weather!.main.pressure)hPa"
         self.humidityLabel.text = "\(weather!.main.humidity)%"
         self.title = "\(weather!.name)"

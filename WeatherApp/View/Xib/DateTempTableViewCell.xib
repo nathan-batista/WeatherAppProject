@@ -23,7 +23,7 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ukO-5A-9OR">
                                 <rect key="frame" x="91" y="8" width="20" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="80" id="16t-yv-o7t"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="80" identifier="imageHeightConstraint" id="16t-yv-o7t"/>
                                     <constraint firstAttribute="width" secondItem="ukO-5A-9OR" secondAttribute="height" multiplier="1:1" id="ZLe-st-XBd"/>
                                 </constraints>
                             </imageView>

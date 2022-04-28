@@ -17,6 +17,15 @@ class DateTempTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        //Alterar constraint de altura maxima para <= 140
+        if UIDevice.current.model == "iPad" {
+            for constraint in tempImageView.constraints {
+                if constraint.identifier == "imageHeightConstraint" {
+                    constraint.constant = 140
+                }
+            }
+        }
+        tempImageView.layoutIfNeeded()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

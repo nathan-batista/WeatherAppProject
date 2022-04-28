@@ -7,44 +7,6 @@
 
 import Foundation
 
-enum WeatherFields{
-    case temp_min
-    case temp_max
-    case humidity
-    case feels_like
-    case pressure
-}
-
-struct DateGetter {
-    func getCurrentDate()-> [Int]?{
-        let date = Date()
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.day,.month], from: date)
-        if let day = components.day,let month = components.month{
-            return [day,month]
-        }
-        return nil
-    }
-}
-
-struct ImageGetter{
-    func getImage(_ weather:Weather) -> String{
-        var imageName = ""
-        if weather.main.lowercased() == "clear" {
-            imageName = "clear"
-        }
-        else if weather.main.lowercased() == "clouds" {
-            imageName = "clouds"
-        }
-        else {
-            imageName = "sun"
-        }
-        return imageName
-    }
-}
-
-
-
 struct WeatherList:Codable {
     let cod:String
     let message:Int

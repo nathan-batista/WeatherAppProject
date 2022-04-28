@@ -30,7 +30,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="ZqC-i8-yRQ" firstAttribute="leading" secondItem="95M-nU-FWA" secondAttribute="leading" constant="10" id="8f6-rI-Ug1"/>
                                     <constraint firstAttribute="trailing" secondItem="ZqC-i8-yRQ" secondAttribute="trailing" constant="10" id="UIY-e6-6ix"/>
@@ -47,7 +47,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="Qky-YN-zVd" firstAttribute="centerY" secondItem="tXL-jE-EFn" secondAttribute="centerY" id="5i0-0m-mmM"/>
                                     <constraint firstAttribute="trailing" secondItem="Qky-YN-zVd" secondAttribute="trailing" constant="10" id="Td9-st-DY0"/>
@@ -55,8 +55,10 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </stackView>
                 </subviews>
+                <color key="backgroundColor" systemColor="systemTealColor"/>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="rAX-2n-Xn2" secondAttribute="bottom" id="DrN-jr-DrI"/>
                     <constraint firstItem="rAX-2n-Xn2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="jGp-d2-68E"/>
@@ -65,6 +67,7 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" systemColor="systemTealColor"/>
             <connections>
                 <outlet property="fieldLabel" destination="ZqC-i8-yRQ" id="RMY-Fl-qqg"/>
                 <outlet property="valueLabel" destination="Qky-YN-zVd" id="fIY-4r-rIh"/>
@@ -73,8 +76,8 @@
         </tableViewCell>
     </objects>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        <systemColor name="systemTealColor">
+            <color red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

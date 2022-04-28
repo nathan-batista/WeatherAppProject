@@ -23,6 +23,9 @@
 		C2BB9CC02819D59A0060537E /* TodayWeatherScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2BB9CBF2819D59A0060537E /* TodayWeatherScreen.storyboard */; };
 		C2BB9CC32819D6F60060537E /* TodayWeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BB9CC12819D6F60060537E /* TodayWeatherTableViewCell.swift */; };
 		C2BB9CC42819D6F60060537E /* TodayWeatherTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2BB9CC22819D6F60060537E /* TodayWeatherTableViewCell.xib */; };
+		C2F7692E281AD5D800648E30 /* ViewController+TableExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F7692D281AD5D800648E30 /* ViewController+TableExtension.swift */; };
+		C2F76930281AD62700648E30 /* Parsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F7692F281AD62700648E30 /* Parsers.swift */; };
+		C2F76932281AD66400648E30 /* TodayWeather+TableExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F76931281AD66400648E30 /* TodayWeather+TableExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +47,9 @@
 		C2BB9CBF2819D59A0060537E /* TodayWeatherScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TodayWeatherScreen.storyboard; sourceTree = "<group>"; };
 		C2BB9CC12819D6F60060537E /* TodayWeatherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWeatherTableViewCell.swift; sourceTree = "<group>"; };
 		C2BB9CC22819D6F60060537E /* TodayWeatherTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TodayWeatherTableViewCell.xib; sourceTree = "<group>"; };
+		C2F7692D281AD5D800648E30 /* ViewController+TableExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+TableExtension.swift"; sourceTree = "<group>"; };
+		C2F7692F281AD62700648E30 /* Parsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parsers.swift; sourceTree = "<group>"; };
+		C2F76931281AD66400648E30 /* TodayWeather+TableExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodayWeather+TableExtension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +100,7 @@
 			children = (
 				C2463AE727F9EAFF0045451E /* WeatherStructs.swift */,
 				C2463AE927F9ED770045451E /* APIClass.swift */,
+				C2F7692F281AD62700648E30 /* Parsers.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -111,10 +118,10 @@
 		C2463AE627F9EAE90045451E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				C25BD93B281990F6005F46A8 /* CellControllers */,
+				C2F7692C281AD5C200648E30 /* Extensions */,
 				C2BB9CBD2819D57B0060537E /* TodayWeatherViewController.swift */,
 				C2463AD327F9EA190045451E /* ViewController.swift */,
-				C270981427FA166200E7024E /* ViewController+CoreDelegate.swift */,
-				C25BD93B281990F6005F46A8 /* CellControllers */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -135,6 +142,16 @@
 				C25BD937281990EE005F46A8 /* DateTempTableViewCell.swift */,
 			);
 			path = CellControllers;
+			sourceTree = "<group>";
+		};
+		C2F7692C281AD5C200648E30 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C2F7692D281AD5D800648E30 /* ViewController+TableExtension.swift */,
+				C270981427FA166200E7024E /* ViewController+CoreDelegate.swift */,
+				C2F76931281AD66400648E30 /* TodayWeather+TableExtension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,7 +231,10 @@
 			files = (
 				C2BB9CC32819D6F60060537E /* TodayWeatherTableViewCell.swift in Sources */,
 				C270981527FA166200E7024E /* ViewController+CoreDelegate.swift in Sources */,
+				C2F76930281AD62700648E30 /* Parsers.swift in Sources */,
+				C2F76932281AD66400648E30 /* TodayWeather+TableExtension.swift in Sources */,
 				C2463AD427F9EA190045451E /* ViewController.swift in Sources */,
+				C2F7692E281AD5D800648E30 /* ViewController+TableExtension.swift in Sources */,
 				C2463AD027F9EA190045451E /* AppDelegate.swift in Sources */,
 				C25BD939281990EE005F46A8 /* DateTempTableViewCell.swift in Sources */,
 				C2463AD227F9EA190045451E /* SceneDelegate.swift in Sources */,

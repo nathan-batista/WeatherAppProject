@@ -17,16 +17,16 @@ extension ViewController : CLLocationManagerDelegate {
         locationManager.startUpdatingLocation()
     }
     
+    
+    
+    
     //Passar a requisicao da API para um WeatherService e mudar a verificação do location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if WeatherService.verifyHasLocation(locations: locations, coordinates: coordinates){
-            coordinates = locations.first
-            WeatherService.makeRequest(coordinates: coordinates!, manager: locationManager, APIController: APIController){ [weak self] weatherResponse in
-                self?.weather = weatherResponse
-                DispatchQueue.main.async {
-                    self?.reloadLabels()
-                    self?.tempTable.reloadData()
-                }
+        WeatherService.callAPI(locations: locations, coordinates: coordinates, manager: manager, APIController: APIController) { [weak self] weatherResponse in
+            self?.weather = weatherResponse
+            DispatchQueue.main.async {
+                self?.reloadLabels()
+                self?.tempTable.reloadData()
             }
         }
     }

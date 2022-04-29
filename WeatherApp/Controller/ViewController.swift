@@ -38,6 +38,8 @@ class ViewController: UIViewController {
         //Tamanho automatico da celula
         tempTable.rowHeight = UITableView.automaticDimension
         tempTable.estimatedRowHeight = 70
+        
+        
 
         // Do any additional setup after loading the view.
     }

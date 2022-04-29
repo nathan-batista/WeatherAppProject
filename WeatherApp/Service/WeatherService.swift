@@ -9,6 +9,11 @@ import Foundation
 import CoreLocation
 
 
+enum Errors: Error {
+    case emptyLocations
+}
+
+
 struct WeatherService {
     static func makeRequest(coordinates:CLLocation,manager:CLLocationManager,APIController:API, completion: @escaping (WeatherList?) -> Void) {
         manager.stopUpdatingLocation()
@@ -17,7 +22,21 @@ struct WeatherService {
         APIController.tempRequest(lat,lon,completionHandler: completion)
     }
     
-    static func verifyHasLocation(locations: [CLLocation], coordinates:CLLocation?)->Bool{
-        return !locations.isEmpty && coordinates == nil
+    static func verifyHasLocation(locations: [CLLocation], coordinates:CLLocation?)->Result<Int,Error>{
+        if !locations.isEmpty && coordinates == nil {
+            return .success(0)
+        }
+        return .failure(Errors.emptyLocations)
+    }
+    
+    static func callAPI(locations:[CLLocation],coordinates:CLLocation?,manager:CLLocationManager,APIController:API,completion:@escaping (WeatherList?) -> Void) {
+        let response = verifyHasLocation(locations: locations, coordinates: coordinates)
+        switch response {
+        case .success(let code):
+            let newCoordinates = locations.first!
+            makeRequest(coordinates: newCoordinates, manager: manager, APIController: APIController, completion: completion)
+        case .failure(let code):
+            return
+        }
     }
 }

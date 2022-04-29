@@ -17,14 +17,11 @@ extension ViewController : CLLocationManagerDelegate {
         locationManager.startUpdatingLocation()
     }
     
+    //Passar a requisicao da API para um WeatherService e mudar a verificação do location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if !locations.isEmpty && coordinates == nil {
+        if WeatherService.verifyHasLocation(locations: locations, coordinates: coordinates){
             coordinates = locations.first
-            locationManager.stopUpdatingLocation()
-           
-          
-//            let url = "https://api.openweathermap.org/data/2.5/forecast?lat=\(lat)&lon=\(lon)&appid=bd9d9e36d84edc52956d87da343a9e96&units=metric&lang=pt_br"
-            APIController.tempRequest(Float(coordinates!.coordinate.latitude),Float(coordinates!.coordinate.longitude)){ [weak self] weatherResponse in
+            WeatherService.makeRequest(coordinates: coordinates!, manager: locationManager, APIController: APIController){ [weak self] weatherResponse in
                 self?.weather = weatherResponse
                 DispatchQueue.main.async {
                     self?.reloadLabels()
@@ -35,11 +32,6 @@ extension ViewController : CLLocationManagerDelegate {
     }
     
     func reloadLabels() {
-//        self.sensacaoLabel.text = "\(weather!.main.temp)º"
-//        self.minTempLabel.text = "\(weather!.main.temp_min)º"
-//        self.maxTemplabel.text = "\(weather!.main.temp_max)º"
-//        self.pressureLabel.text = "\(weather!.main.pressure)hPa"
-//        self.humidityLabel.text = "\(weather!.main.humidity)%"
         if let weather = weather?.list[0]{
             self.tempLabel.text = "\(Int(weather.main.temp))ºC"
             let imageName = ImageGetter().getImage(weather.weather[0])

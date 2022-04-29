@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C22973FE281C004C00ED3795 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22973FD281C004C00ED3795 /* WeatherService.swift */; };
 		C2463AD027F9EA190045451E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2463ACF27F9EA190045451E /* AppDelegate.swift */; };
 		C2463AD227F9EA190045451E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2463AD127F9EA190045451E /* SceneDelegate.swift */; };
 		C2463AD427F9EA190045451E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2463AD327F9EA190045451E /* ViewController.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C22973FD281C004C00ED3795 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		C2463ACC27F9EA190045451E /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2463ACF27F9EA190045451E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C2463AD127F9EA190045451E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -65,6 +67,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C22973FC281C003B00ED3795 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				C22973FD281C004C00ED3795 /* WeatherService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		C2463AC327F9EA190045451E = {
 			isa = PBXGroup;
 			children = (
@@ -84,6 +94,7 @@
 		C2463ACE27F9EA190045451E /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				C22973FC281C003B00ED3795 /* Service */,
 				C2463AE627F9EAE90045451E /* Controller */,
 				C2463AE527F9EADD0045451E /* View */,
 				C2463AE327F9EACA0045451E /* Model */,
@@ -238,6 +249,7 @@
 				C2F76930281AD62700648E30 /* Parsers.swift in Sources */,
 				C2F76932281AD66400648E30 /* TodayWeather+TableExtension.swift in Sources */,
 				C2463AD427F9EA190045451E /* ViewController.swift in Sources */,
+				C22973FE281C004C00ED3795 /* WeatherService.swift in Sources */,
 				C2F7692E281AD5D800648E30 /* ViewController+TableExtension.swift in Sources */,
 				C2463AD027F9EA190045451E /* AppDelegate.swift in Sources */,
 				C25BD939281990EE005F46A8 /* DateTempTableViewCell.swift in Sources */,

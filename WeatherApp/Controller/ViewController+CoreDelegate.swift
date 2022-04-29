@@ -17,12 +17,9 @@ extension ViewController : CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if !locations.isEmpty && coordinates == nil {
+        if WeatherService.verifyHasLocation(locations: locations, coordinates: coordinates) {
             coordinates = locations.first
-            locationManager.stopUpdatingLocation()
-            let lat = coordinates!.coordinate.latitude
-            let lon = coordinates!.coordinate.longitude
-            APIController.request(Float(lat),Float(lon)){ [weak self] weatherResponse in
+            WeatherService.makeRequest(coordinates: coordinates!, manager: manager, APIController: APIController){ [weak self] weatherResponse in
                 self?.weather = weatherResponse
                 DispatchQueue.main.async {
                     self?.reloadLabels()

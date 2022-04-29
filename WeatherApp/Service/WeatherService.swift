@@ -33,7 +33,7 @@ struct WeatherService {
         let response = verifyHasLocation(locations: locations, coordinates: coordinates)
         switch response {
         case .success(let code):
-            let newCoordinates = locations.first!
+            guard let newCoordinates = locations.first else {return}
             makeRequest(coordinates: newCoordinates, manager: manager, APIController: APIController, completion: completion)
         case .failure(let code):
             return

@@ -34,7 +34,7 @@ extension ViewController : CLLocationManagerDelegate {
     func reloadLabels() {
         if let weather = weather?.daily[0]{
             self.tempLabel.text = "\(Int(weather.temp.day))ºC"
-            let imageName = ImageGetter().getImage(weather.weather[0])
+            let imageName = ImageGetter.getImage(weather.weather[0])
             weatherImage.image = UIImage(named: imageName)
             self.title = "\(weather.weather[0].main)"
         }

@@ -36,7 +36,7 @@ class DateTempTableViewCell: UITableViewCell {
     func configure(_ date:[Int], model:WeatherAPIDataDay?) {
         dayLabel.text = "\(date[0])"
         if let model = model {
-            let imageName = ImageGetter().getImage(model.weather[0])
+            let imageName = ImageGetter.getImage(model.weather[0])
             tempImageView.image = UIImage(named: imageName)
             for view in tempStack.arrangedSubviews {
               let labelView = view as! UILabel

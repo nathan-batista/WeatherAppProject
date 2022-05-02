@@ -15,7 +15,7 @@ enum WeatherFields{
 }
 
 struct DateGetter {
-    func getCurrentDate()-> [Int]?{
+    static func getCurrentDate()-> [Int]?{
         let date = Date()
         let calendar = Calendar.current
         let components = calendar.dateComponents([.day,.month], from: date)
@@ -27,7 +27,7 @@ struct DateGetter {
 }
 
 struct ImageGetter{
-    func getImage(_ weather:Weather) -> String{
+    static func getImage(_ weather:Weather) -> String{
         var imageName = ""
         if weather.main.lowercased() == "clear" {
             imageName = "clear"

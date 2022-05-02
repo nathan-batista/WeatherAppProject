@@ -48,7 +48,7 @@ class ViewController: UIViewController {
         if segue.identifier == "goToTodayWeather" {
             if let destination = segue.destination as? TodayWeatherViewController,
                 let index = sender as? IndexPath{
-                let date = DateGetter().getCurrentDate()
+                let date = DateGetter.getCurrentDate()
                 let day = (date?[0] ?? 0) + index.row
                 destination.title = "Day \(day)"
                 destination.todayWeather = weather?.daily[index.row]

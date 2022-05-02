@@ -16,7 +16,7 @@ extension ViewController:UITableViewDataSource , UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: DateTempTableViewCell.identifier) as! DateTempTableViewCell
-        var date = DateGetter().getCurrentDate()
+        var date = DateGetter.getCurrentDate()
         let day = date?[0] ?? 0
         date?[0] = day + indexPath.row
         cell.configure(date ?? [0], model: weather?.daily[indexPath.row])
@@ -26,7 +26,6 @@ extension ViewController:UITableViewDataSource , UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as! DateTempTableViewCell
         performSegue(withIdentifier: "goToTodayWeather", sender: indexPath)
     }
     

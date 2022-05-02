@@ -23,14 +23,17 @@ class TodayWeatherViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Setup do delegate da table e arredondamento de bordas
         todayTable.dataSource = self
         todayTable.delegate = self
         todayTable.layer.cornerRadius = 15
         todayTable.tableFooterView = UIView()
+        //registro da célula do xib na table
         todayTable.register(UINib(nibName: "TodayWeatherTableViewCell", bundle: nil), forCellReuseIdentifier: TodayWeatherTableViewCell.identifier)
+        //Obter a imagem que irá para a view
         if let weather = todayWeather {
             temp.text = "\(Int(weather.temp.day))ºC"
-            let imageName = ImageGetter().getImage(weather.weather[0])
+            let imageName = ImageGetter.getImage(weather.weather[0])
             todayImage.image = UIImage(named: imageName)
         }
         

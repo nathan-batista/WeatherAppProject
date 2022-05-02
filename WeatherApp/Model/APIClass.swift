@@ -12,7 +12,8 @@ class API{
     public func tempRequest(_ latitude:Float,_ longitude:Float, completionHandler: @escaping (WeatherList?) -> Void){
         let lat = String(format: "%.2f", latitude)
         let lon = String(format: "%.2f", longitude)
-        let url = "https://api.openweathermap.org/data/2.5/onecall?lat=\(lat)&lon=\(lon)&exclude=minutely,hourly&appid=\(APIKey.key)&units=metric&lang=pt_br"
+        //APIKey é um enum contendo a minha chave para a api openweather, para utilizar o código crie um arquivo MyAPI e o enum APIKey c a sua chave de api
+        let url = "https://api.openweathermap.org/data/2.5/onecall?lat=\(lat)&lon=\(lon)&exclude=minutely,hourly&appid=\(APIKey.key.rawValue)&units=metric&lang=pt_br"
         request(url, completionHandler)
     }
     

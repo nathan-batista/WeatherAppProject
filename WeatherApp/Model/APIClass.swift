@@ -11,7 +11,7 @@ class API{
     public func request(_ lat:Float,_ lon:Float, _ completionHandler: @escaping (WeatherAPIData?) ->Void){
         let latitude = String(format: "%.2f", lat)
         let longitude = String(format: "%.2f",lon)
-        let url = "https://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&appid=\(APIKey.key)&units=metric&lang=pt_br"
+        let url = "https://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&appid=\(APIKey.key.rawValue)&units=metric&lang=pt_br"
         let apiURL = URL(string: url)!
         
         let task = URLSession.shared.dataTask(with: apiURL, completionHandler: {

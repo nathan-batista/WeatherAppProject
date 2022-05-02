@@ -8,28 +8,43 @@
 import Foundation
 
 struct WeatherList:Codable {
-    let cod:String
-    let message:Int
-    let cnt:Int
-    let list:[WeatherAPIData]
-    let country:String?
-    let population:Int?
-    let timezone:Int?
-    let sunrise:Int?
-    let sunset:Int?
+    let timezone:String
+    let timezone_offset:Int
+    let current:WeatherAPIData
+    let daily:[WeatherAPIDataDay]
+}
+
+struct WeatherAPIDataDay:Codable {
+    let dt:Int
+    let sunrise:Int
+    let sunset:Int
+    let temp:Temp
+    let feels_like:FeelsLike
+    let pressure:Int
+    let humidity:Int
+    let weather:[Weather]
+}
+
+struct Temp:Codable {
+    let day:Float
+    let min:Float
+    let max:Float
+}
+struct FeelsLike:Codable {
+    let day:Float
+    let night:Float
 }
 
 
 struct WeatherAPIData:Codable{
     let dt:Int
-    let main:MainData
+    let sunrise:Int
+    let sunset:Int
+    let temp:Float
+    let feels_like:Float
+    let pressure:Int
+    let humidity:Int
     let weather:[Weather]
-    let clouds:Clouds
-    let wind:WindStatus
-    let visibility:Int
-    let pop:Float
-    let sys:SysDataAPI
-    let dt_txt:String
 }
 
 struct Coordinates : Codable {

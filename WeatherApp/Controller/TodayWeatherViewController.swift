@@ -19,7 +19,7 @@ class TodayWeatherViewController: UIViewController {
     @IBOutlet weak var temp:UILabel!
     @IBOutlet weak var todayImage:UIImageView!
     
-    var todayWeather:WeatherAPIData?
+    var todayWeather:WeatherAPIDataDay?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +29,7 @@ class TodayWeatherViewController: UIViewController {
         todayTable.tableFooterView = UIView()
         todayTable.register(UINib(nibName: "TodayWeatherTableViewCell", bundle: nil), forCellReuseIdentifier: TodayWeatherTableViewCell.identifier)
         if let weather = todayWeather {
-            temp.text = "\(Int(weather.main.temp))ºC"
+            temp.text = "\(Int(weather.temp.day))ºC"
             let imageName = ImageGetter().getImage(weather.weather[0])
             todayImage.image = UIImage(named: imageName)
         }

@@ -12,7 +12,7 @@ class API{
     public func tempRequest(_ latitude:Float,_ longitude:Float, completionHandler: @escaping (WeatherList?) -> Void){
         let lat = String(format: "%.2f", latitude)
         let lon = String(format: "%.2f", longitude)
-        let url = "https://api.openweathermap.org/data/2.5/forecast?lat=\(lat)&lon=\(lon)&appid=\(APIKey.key)&units=metric&lang=pt_br"
+        let url = "https://api.openweathermap.org/data/2.5/onecall?lat=\(lat)&lon=\(lon)&exclude=minutely,hourly&appid=\(APIKey.key)&units=metric&lang=pt_br"
         request(url, completionHandler)
     }
     

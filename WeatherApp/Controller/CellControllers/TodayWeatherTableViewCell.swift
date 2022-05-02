@@ -25,24 +25,24 @@ class TodayWeatherTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configure(model:WeatherAPIData?,field:WeatherFields) {
+    func configure(model:WeatherAPIDataDay?,field:WeatherFields) {
         if let model = model {
             switch field {
             case .temp_max:
                 fieldLabel.text = "Temp. Máx:"
-                valueLabel.text = "\(Int(model.main.temp_max))ºC"
+                valueLabel.text = "\(Int(model.temp.day))ºC"
             case .temp_min:
                 fieldLabel.text = "Temp. Min:"
-                valueLabel.text = "\(Int(model.main.temp_min))ºC"
+                valueLabel.text = "\(Int(model.temp.min))ºC"
             case .humidity:
                 fieldLabel.text = "Umidade:"
-                valueLabel.text = "\(model.main.humidity)%"
+                valueLabel.text = "\(model.humidity)%"
             case .feels_like:
                 fieldLabel.text = "Sensação Térmica:"
-                valueLabel.text = "\(Int(model.main.feels_like))ºC"
+                valueLabel.text = "\(Int(model.feels_like.day))ºC"
             case .pressure:
                 fieldLabel.text = "Pressão:"
-                valueLabel.text = "\(model.main.pressure)hPa"
+                valueLabel.text = "\(model.pressure)hPa"
             }
         }
     }

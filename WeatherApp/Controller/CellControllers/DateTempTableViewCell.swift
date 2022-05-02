@@ -33,7 +33,7 @@ class DateTempTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    func configure(_ date:[Int], model:WeatherAPIData?) {
+    func configure(_ date:[Int], model:WeatherAPIDataDay?) {
         dayLabel.text = "\(date[0])"
         if let model = model {
             let imageName = ImageGetter().getImage(model.weather[0])
@@ -42,9 +42,9 @@ class DateTempTableViewCell: UITableViewCell {
               let labelView = view as! UILabel
                 switch labelView.tag{
                     case 0:
-                    labelView.text =  String(Int(model.main.temp_min))+"ºC"
+                    labelView.text =  String(Int(model.temp.min))+"ºC"
                     default:
-                    labelView.text = String(Int(model.main.temp_max))+"ºC"
+                    labelView.text = String(Int(model.temp.max))+"ºC"
                 }
             }
         }

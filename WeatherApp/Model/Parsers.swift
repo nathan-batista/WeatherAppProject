@@ -34,6 +34,8 @@ struct ImageGetter{
         }
         else if weather.main.lowercased() == "clouds" {
             imageName = "clouds"
+        } else if weather.main.lowercased() == "rain" {
+            imageName = "rain"
         }
         else {
             imageName = "sun"

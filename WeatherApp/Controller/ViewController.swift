@@ -51,7 +51,7 @@ class ViewController: UIViewController {
                 let date = DateGetter().getCurrentDate()
                 let day = (date?[0] ?? 0) + index.row
                 destination.title = "Day \(day)"
-                destination.todayWeather = weather?.list[index.row*8]
+                destination.todayWeather = weather?.daily[index.row]
             }
         }
     }

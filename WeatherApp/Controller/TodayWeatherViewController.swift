@@ -34,7 +34,7 @@ class TodayWeatherViewController: UIViewController {
         if let weather = todayWeather {
             temp.text = "\(Int(weather.temp.day))ºC"
             let imageName = ImageGetter.getImage(weather.weather[0])
-            todayImage.image = UIImage(named: imageName)
+            todayImage.image = UIImage(systemName: imageName)?.withTintColor(.label, renderingMode: .alwaysOriginal)
         }
         
         // Do any additional setup after loading the view.

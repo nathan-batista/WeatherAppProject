@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Temperatura-->
         <scene sceneID="7DM-SA-hew">
             <objects>
                 <viewController id="BXc-wi-Goj" customClass="ViewController" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -16,26 +16,44 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="rain" translatesAutoresizingMaskIntoConstraints="NO" id="JGg-vX-RJ9">
-                                <rect key="frame" x="87" y="124" width="240" height="120"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search for city" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="x6Y-3a-gIf">
+                                <rect key="frame" x="16" y="52" width="344.5" height="34"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
+                            </textField>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="sun.max.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="JGg-vX-RJ9">
+                                <rect key="frame" x="87" y="101.5" width="240" height="120.5"/>
+                                <color key="tintColor" systemColor="labelColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="JGg-vX-RJ9" secondAttribute="height" multiplier="2:1" id="pG2-nx-Ng0"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalCompressionResistancePriority="1000" text="Carregando" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nWO-Gd-d9l">
-                                <rect key="frame" x="0.0" y="294" width="414" height="37"/>
+                                <rect key="frame" x="0.0" y="272" width="414" height="37"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="B4G-Ag-3eL">
-                                <rect key="frame" x="16" y="347" width="382" height="499"/>
+                                <rect key="frame" x="16" y="325" width="382" height="521"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Usz-Pk-YoQ">
+                                <rect key="frame" x="368.5" y="53.5" width="45.5" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="magnifyingglass" catalog="system">
+                                    <color key="baseForegroundColor" systemColor="labelColor"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="tappedSearch:" destination="BXc-wi-Goj" eventType="touchUpInside" id="LqY-Xh-9PC"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="tAH-jW-sXB"/>
                         <color key="backgroundColor" systemColor="systemTealColor"/>
                         <constraints>
+                            <constraint firstItem="tAH-jW-sXB" firstAttribute="trailing" secondItem="Usz-Pk-YoQ" secondAttribute="trailing" id="3jZ-aN-6BK"/>
+                            <constraint firstItem="Usz-Pk-YoQ" firstAttribute="centerY" secondItem="x6Y-3a-gIf" secondAttribute="centerY" id="4hq-WO-aKz"/>
                             <constraint firstItem="nWO-Gd-d9l" firstAttribute="top" secondItem="JGg-vX-RJ9" secondAttribute="bottom" constant="50" id="BEy-ec-HL8"/>
                             <constraint firstItem="JGg-vX-RJ9" firstAttribute="leading" secondItem="tAH-jW-sXB" secondAttribute="leading" constant="87" id="Dh3-Wh-o3l"/>
                             <constraint firstItem="tAH-jW-sXB" firstAttribute="bottom" secondItem="B4G-Ag-3eL" secondAttribute="bottom" constant="16" id="Fet-7k-Oyq"/>
@@ -43,13 +61,18 @@
                             <constraint firstItem="nWO-Gd-d9l" firstAttribute="leading" secondItem="tAH-jW-sXB" secondAttribute="leading" id="R4q-fl-1tQ"/>
                             <constraint firstItem="tAH-jW-sXB" firstAttribute="trailing" secondItem="nWO-Gd-d9l" secondAttribute="trailing" id="Rqk-c8-knR"/>
                             <constraint firstItem="nWO-Gd-d9l" firstAttribute="centerX" secondItem="tAH-jW-sXB" secondAttribute="centerX" id="XoL-s4-jdL"/>
+                            <constraint firstItem="x6Y-3a-gIf" firstAttribute="leading" secondItem="tAH-jW-sXB" secondAttribute="leading" constant="16" id="ckj-hz-RTO"/>
                             <constraint firstItem="B4G-Ag-3eL" firstAttribute="top" secondItem="nWO-Gd-d9l" secondAttribute="bottom" constant="16" id="dNN-fO-hta"/>
                             <constraint firstItem="JGg-vX-RJ9" firstAttribute="centerX" secondItem="tAH-jW-sXB" secondAttribute="centerX" id="hFv-gn-r3L"/>
-                            <constraint firstItem="JGg-vX-RJ9" firstAttribute="top" secondItem="tAH-jW-sXB" secondAttribute="top" constant="80" id="jhY-Ic-9HH"/>
+                            <constraint firstItem="x6Y-3a-gIf" firstAttribute="top" secondItem="tAH-jW-sXB" secondAttribute="top" constant="8" id="l4F-Lc-nQW"/>
+                            <constraint firstItem="Usz-Pk-YoQ" firstAttribute="leading" secondItem="x6Y-3a-gIf" secondAttribute="trailing" constant="8" id="nfw-w6-H6Y"/>
+                            <constraint firstItem="JGg-vX-RJ9" firstAttribute="top" secondItem="x6Y-3a-gIf" secondAttribute="bottom" constant="16" id="qNw-H8-AjH"/>
                             <constraint firstItem="B4G-Ag-3eL" firstAttribute="leading" secondItem="tAH-jW-sXB" secondAttribute="leading" constant="16" id="vq4-sk-w7c"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Temperatura" id="p0l-vZ-4Ey"/>
                     <connections>
+                        <outlet property="searchTextField" destination="x6Y-3a-gIf" id="0mc-nJ-O8W"/>
                         <outlet property="tempLabel" destination="nWO-Gd-d9l" id="MNY-v7-vpv"/>
                         <outlet property="tempTable" destination="B4G-Ag-3eL" id="75R-AA-dmM"/>
                         <outlet property="weatherImage" destination="JGg-vX-RJ9" id="oXR-91-whF"/>
@@ -58,7 +81,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wBF-yd-pKc" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-65.217391304347828" y="-22.098214285714285"/>
+            <point key="canvasLocation" x="844.92753623188412" y="-22.098214285714285"/>
         </scene>
         <!--TodayWeatherScreen-->
         <scene sceneID="0sp-MX-jIS">
@@ -68,11 +91,15 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jbY-Y8-oUm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="809" y="-350"/>
+            <point key="canvasLocation" x="1718.1159420289857" y="-350.22321428571428"/>
         </scene>
     </scenes>
     <resources>
-        <image name="rain" width="512" height="512"/>
+        <image name="magnifyingglass" catalog="system" width="128" height="115"/>
+        <image name="sun.max.fill" catalog="system" width="128" height="124"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

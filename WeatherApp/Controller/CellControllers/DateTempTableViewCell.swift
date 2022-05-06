@@ -37,7 +37,7 @@ class DateTempTableViewCell: UITableViewCell {
         dayLabel.text = "\(date[0])"
         if let model = model {
             let imageName = ImageGetter.getImage(model.weather[0])
-            tempImageView.image = UIImage(named: imageName)
+            tempImageView.image = UIImage(systemName: imageName)?.withTintColor(.label, renderingMode: .alwaysOriginal)
             for view in tempStack.arrangedSubviews {
               let labelView = view as! UILabel
                 switch labelView.tag{
@@ -49,5 +49,4 @@ class DateTempTableViewCell: UITableViewCell {
             }
         }
     }
-    
 }

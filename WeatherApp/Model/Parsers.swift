@@ -28,18 +28,21 @@ struct DateGetter {
 
 struct ImageGetter{
     static func getImage(_ weather:Weather) -> String{
-        var imageName = ""
-        if weather.main.lowercased() == "clear" {
-            imageName = "clear"
+        switch(weather.id){
+        case 200...232:
+            return "cloud.bolt.rain.fill"
+        case 300...321:
+            return "cloud.rain.fill"
+        case 500...531:
+            return "cloud.sun.rain.fill"
+        case 600...622:
+            return "cloud.snow.fill"
+        case 700...781:
+            return "cloud.fog.fill"
+        case 800:
+            return "sun.max.fill"
+        default:
+            return "cloud.fill"
         }
-        else if weather.main.lowercased() == "clouds" {
-            imageName = "clouds"
-        } else if weather.main.lowercased() == "rain" {
-            imageName = "rain"
-        }
-        else {
-            imageName = "sun"
-        }
-        return imageName
     }
 }

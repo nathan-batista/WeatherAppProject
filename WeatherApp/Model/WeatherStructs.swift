@@ -54,3 +54,12 @@ struct Weather : Codable {
     let icon:String
 }
 
+struct Coordinates:Codable {
+    let lon:Float
+    let lat:Float
+}
+
+struct WeatherCurrent:Codable {
+    let coord:Coordinates
+}
+

@@ -11,22 +11,20 @@ import CoreLocation
 
 extension ViewController : CLLocationManagerDelegate {
     
+    
+    //Criar classe de localização
     func setupLocation() {
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
     }
-    
-    
-    
-    
     //Passar a requisicao da API para um WeatherService e mudar a verificação do location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        WeatherService.callAPI(locations: locations, coordinates: coordinates, manager: manager, APIController: APIController) { [weak self] weatherResponse in
-            self?.weather = weatherResponse
+        WeatherService.callAPI(locations: locations, coordinates: &coordinates, manager: manager) { weatherResponse in
+            self.weather = weatherResponse
             DispatchQueue.main.async {
-                self?.reloadLabels()
-                self?.tempTable.reloadData()
+                self.reloadLabels()
+                self.tempTable.reloadData()
             }
         }
     }
@@ -35,8 +33,8 @@ extension ViewController : CLLocationManagerDelegate {
         if let weather = weather?.daily[0]{
             self.tempLabel.text = "\(Int(weather.temp.day))ºC"
             let imageName = ImageGetter.getImage(weather.weather[0])
-            weatherImage.image = UIImage(named: imageName)
-            self.title = "\(weather.weather[0].main)"
+            weatherImage.image = UIImage(systemName: imageName)?.withTintColor(.label, renderingMode: .alwaysOriginal)
+            self.navigationItem.title = "\(weather.weather[0].main)"
         }
     }
 }

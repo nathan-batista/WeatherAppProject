@@ -21,16 +21,16 @@ class TodayWeatherTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
     
+    //Passar decisao dos fields para o TableViewController
     func configure(model:WeatherAPIDataDay?,field:WeatherFields) {
         if let model = model {
             switch field {
             case .temp_max:
                 fieldLabel.text = "Temp. Máx:"
-                valueLabel.text = "\(Int(model.temp.day))ºC"
+                valueLabel.text = "\(Int(model.temp.max))ºC"
             case .temp_min:
                 fieldLabel.text = "Temp. Min:"
                 valueLabel.text = "\(Int(model.temp.min))ºC"

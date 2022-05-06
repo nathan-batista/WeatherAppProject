@@ -9,15 +9,15 @@ import Foundation
 
 class API{
     
-    public func tempRequest(_ latitude:Float,_ longitude:Float, completionHandler: @escaping (WeatherList?) -> Void){
+    //Passar pro weather service
+    static public func tempRequest(_ latitude:Float,_ longitude:Float, completionHandler: @escaping (WeatherList?) -> Void){
         let lat = String(format: "%.2f", latitude)
         let lon = String(format: "%.2f", longitude)
-        //APIKey é um enum contendo a minha chave para a api openweather, para utilizar o código crie um arquivo MyAPI e o enum APIKey c a sua chave de api
         let url = "https://api.openweathermap.org/data/2.5/onecall?lat=\(lat)&lon=\(lon)&exclude=minutely,hourly&appid=\(APIKey.key.rawValue)&units=metric&lang=pt_br"
         request(url, completionHandler)
     }
     
-    public func request(_ url:String, _ completionHandler: @escaping (WeatherList?) -> Void){
+    static public func request<T:Codable>(_ url:String, _ completionHandler: @escaping (T?) -> Void){
         let apiURL = URL(string: url)!
         
         let task = URLSession.shared.dataTask(with: apiURL, completionHandler: {
@@ -32,8 +32,8 @@ class API{
             }
             if let data = data{
                 do{
-                    let weatherData = try JSONDecoder().decode(WeatherList.self, from: data)
-                    completionHandler(weatherData)
+                    let decodedData = try JSONDecoder().decode(T.self, from: data)
+                    completionHandler(decodedData)
                 }
                 catch{
                     print("Erro ao decodificar \(error)")

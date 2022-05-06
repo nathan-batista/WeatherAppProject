@@ -6,9 +6,14 @@
 //
 
 
-struct City:Codable {
+struct City:Codable,Equatable{
     let Key:String
     let `Type`:String
     let LocalizedName:String
+    
+    static func == (lhs: City, rhs: City) -> Bool {
+        return
+        lhs.LocalizedName == rhs.LocalizedName
+    }
 }
 

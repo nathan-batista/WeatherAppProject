@@ -55,8 +55,8 @@ struct Weather : Codable {
 }
 
 struct Coordinates:Codable {
-    let lon:Float
-    let lat:Float
+    let lon:Double
+    let lat:Double
 }
 
 struct WeatherCurrent:Codable {

@@ -6,16 +6,18 @@
 //
 import Foundation
 
-enum WeatherFields{
-    case temp_min
-    case temp_max
-    case humidity
-    case feels_like
-    case pressure
+
+//Enum com valores especificos
+enum WeatherFields:String{
+    case temp_min = "Temp. Min:"
+    case temp_max = "Temp. Máx:"
+    case humidity = "Umidade:"
+    case feels_like = "Sensação Térmica:"
+    case pressure = "Pressão:"
 }
 
 struct DateGetter {
-    static func getCurrentDate()-> [Int]?{
+    static func getCurrentDate() -> [Int]?{
         let date = Date()
         let calendar = Calendar.current
         let components = calendar.dateComponents([.day,.month], from: date)

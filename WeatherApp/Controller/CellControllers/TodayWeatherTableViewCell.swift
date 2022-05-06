@@ -46,5 +46,10 @@ class TodayWeatherTableViewCell: UITableViewCell {
             }
         }
     }
+    func configure2(model:String,field:WeatherFields){
+        fieldLabel.text = field.rawValue
+        valueLabel.text = model
+    }
+
     
 }

@@ -6,58 +6,61 @@
 //
 
 import Foundation
-import CoreLocation
+import UIKit
 
-
-enum Errors: Error {
-    case emptyLocations
+protocol updatedData{
+    func didUpdateWeather()
+    func citiesFound(cidades:[City])
 }
 
-
-struct WeatherService {
-    static func makeRequest(coordinates:CLLocation,manager:CLLocationManager, completion: @escaping (WeatherList?) -> Void) {
-        manager.stopUpdatingLocation()
-        let lat = Float(coordinates.coordinate.latitude)
-        let lon = Float(coordinates.coordinate.longitude)
-        API.tempRequest(lat,lon,completionHandler: completion)
-    }
+class WeatherService{
     
-    static func verifyHasLocation(locations: [CLLocation], coordinates: inout CLLocation?)->Result<Int,Error>{
-        if !locations.isEmpty && coordinates == nil {
-            return .success(0)
-        }
-        return .failure(Errors.emptyLocations)
-    }
+    let coreLocation = CoreLocationManagerStruct()
+    let weatherAPI = WeatherAPI()
+    private var weatherList:WeatherList? = nil
+    var delegate:updatedData?
     
-    static func callAPI(locations:[CLLocation], coordinates: inout CLLocation?,manager:CLLocationManager,completion:@escaping (WeatherList?) -> Void) {
-        let response = verifyHasLocation(locations: locations, coordinates: &coordinates)
-        switch response {
-        case .success(let code):
-            guard let newCoordinates = locations.first else {return}
-            coordinates = newCoordinates
-            makeRequest(coordinates: newCoordinates, manager: manager,completion: completion)
-        case .failure(let code):
-            return
-        }
-    }
-    
-    static func requestForCities(city:String,completion:@escaping ([City]?) -> Void){
-        let url = "https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=\(APIKey.cityAPIKey.rawValue)&q=\(city)&language=pt-br"
-        API.request(url, completion)
-    }
-    
-    
-    //Uso de PromiseKit do framework Combine
-    static func requestTempForCity(city:String,manager:CLLocationManager,completion:@escaping (WeatherList?) -> Void) {
-        var coordinate:Coordinates?
-        let url = "https://api.openweathermap.org/data/2.5/weather?q=\(city)&appid=\(APIKey.key.rawValue)"
-        API.request(url){ (weather:WeatherCurrent?) in
-            coordinate = weather?.coord
-            DispatchQueue.main.async {
-                if let safeCoordinates = coordinate {
-                    let location = CLLocation(latitude: CLLocationDegrees(safeCoordinates.lat), longitude: CLLocationDegrees(safeCoordinates.lon))
-                    makeRequest(coordinates: location, manager: manager, completion: completion)
+    func requestForCity(city:String){
+        weatherAPI.requestForCities(city: city) { cities in
+            guard let safeCidades = cities else {return}
+            let cidades = safeCidades.filter{$0.`Type`.lowercased() == "city"}
+            var unique:[City] = []
+            for city in cidades{
+                if !unique.contains(city) {
+                    unique.append(city)
                 }
+            }
+            DispatchQueue.main.async {
+                self.delegate?.citiesFound(cidades: unique)
+            }
+        }
+    }
+    
+    func setup(delegate: didUpdateLocation ){
+        coreLocation.delegate = delegate
+        coreLocation.setupLocation()
+    }
+    
+    func getWeatherList() -> WeatherList? {
+        return self.weatherList
+    }
+    
+    func selectedTempCity(city:String){
+        weatherAPI.requestTempForCity(city: city){
+            (weather:WeatherList?) in
+            self.weatherList = weather
+            DispatchQueue.main.async {
+                self.delegate?.didUpdateWeather()
+            }
+        }
+    }
+    
+    func requestWeather(){
+        guard let location = coreLocation.getLocation() else {return}
+        weatherAPI.makeRequest(latitude:location[0] ,longitude:location[1]){ weather in
+            self.weatherList = weather
+            DispatchQueue.main.async {
+                self.delegate?.didUpdateWeather()
             }
         }
     }

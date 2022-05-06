@@ -8,15 +8,6 @@
 import Foundation
 
 class API{
-    
-    //Passar pro weather service
-    static public func tempRequest(_ latitude:Float,_ longitude:Float, completionHandler: @escaping (WeatherList?) -> Void){
-        let lat = String(format: "%.2f", latitude)
-        let lon = String(format: "%.2f", longitude)
-        let url = "https://api.openweathermap.org/data/2.5/onecall?lat=\(lat)&lon=\(lon)&exclude=minutely,hourly&appid=\(APIKey.key.rawValue)&units=metric&lang=pt_br"
-        request(url, completionHandler)
-    }
-    
     static public func request<T:Codable>(_ url:String, _ completionHandler: @escaping (T?) -> Void){
         let apiURL = URL(string: url)!
         

@@ -8,43 +8,28 @@
 import UIKit
 import CoreLocation
 
-class ViewController: UIViewController, ChooseCity {
-    func didSelectCity(city: String) {
-        print(city)
-        WeatherService.requestTempForCity(city: city.lowercased(), manager: self.locationManager){
-            weather in
-                self.weather = weather
-                DispatchQueue.main.async {
-                    self.reloadLabels()
-                    self.tempTable.reloadData()
-                }
-        }
-    }
-    
+class ViewController: UIViewController{
+        
    
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var weatherImage: UIImageView!
     @IBOutlet weak var tempTable: UITableView!
     @IBOutlet weak var searchTextField: UITextField!
     
-    let locationManager : CLLocationManager = CLLocationManager()
-    
-    var coordinates : CLLocation?
-    
-    var weather: WeatherList?
-    
+    let weatherManager = WeatherService()
+    var weather:WeatherList?
+        
     var resultadosBusca:CidadesTableViewController?
-    
-    let APIController = API()
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         searchTextField.delegate = self
         tempTable.dataSource = self
         tempTable.delegate = self
+        weatherManager.delegate = self
         //Registra o xib da celula na tabela
         tempTable.register(UINib(nibName: DateTempTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: DateTempTableViewCell.identifier)
-        setupLocation()
+        weatherManager.setup(delegate: self)
         //setup de borda
         tempTable.layer.cornerRadius = 15
         //Remover a celula vazia no fim da tabela
@@ -79,6 +64,36 @@ class ViewController: UIViewController, ChooseCity {
             searchTextField.endEditing(true)
         }
     }
+}
+
+extension ViewController:ChooseCity {
+    func didSelectCity(city: String) {
+        print(city)
+        weatherManager.selectedTempCity(city:city)
+    }
+}
+
+extension ViewController:updatedData {
+    func citiesFound(cidades:[City]) {
+        self.resultadosBusca?.cities = cidades
+        self.navigationItem.backButtonTitle = "Voltar"
+        self.resultadosBusca?.tableView.reloadData()
+        self.navigationController?.pushViewController(self.resultadosBusca!, animated: true)
+    }
+    
+    func didUpdateWeather() {
+        self.weather = weatherManager.getWeatherList()
+        self.reloadLabels()
+        self.tempTable.reloadData()
+    }
+}
+
+extension ViewController:didUpdateLocation{
+    func newLocationFound() {
+        weatherManager.requestWeather()
+    }
+    
+    
 }
 
 

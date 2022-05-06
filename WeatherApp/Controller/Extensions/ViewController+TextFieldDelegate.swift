@@ -12,7 +12,7 @@ extension ViewController:UITextFieldDelegate{
         if let safeText = textField.text?.lowercased(){
             print(safeText)
             self.view.endEditing(true)
-            weatherManager.requestForCity(city: safeText)
+            weatherManager.requestForCity(city: safeText,delegate: self)
             return true
         }
         return false

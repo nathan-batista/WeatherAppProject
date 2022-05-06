@@ -6,21 +6,23 @@
 //
 
 import Foundation
-import UIKit
 
 protocol updatedData{
+    //Atualiza UI com os novos dados
     func didUpdateWeather()
+    //Atualiza as cidades obtidas
     func citiesFound(cidades:[City])
+    //Avisa que localizacao foi obtida
+    func didUpdateLocation()
 }
 
 class WeatherService{
     
-    let coreLocation = CoreLocationManagerStruct()
+   // let coreLocation = CoreLocationManagerStruct()
     let weatherAPI = WeatherAPI()
     private var weatherList:WeatherList? = nil
-    var delegate:updatedData?
     
-    func requestForCity(city:String){
+    func requestForCity(city:String,delegate:updatedData?){
         weatherAPI.requestForCities(city: city) { cities in
             guard let safeCidades = cities else {return}
             let cidades = safeCidades.filter{$0.`Type`.lowercased() == "city"}
@@ -31,37 +33,37 @@ class WeatherService{
                 }
             }
             DispatchQueue.main.async {
-                self.delegate?.citiesFound(cidades: unique)
+                delegate?.citiesFound(cidades: unique)
             }
         }
     }
     
-    func setup(delegate: didUpdateLocation ){
-        coreLocation.delegate = delegate
-        coreLocation.setupLocation()
-    }
     
     func getWeatherList() -> WeatherList? {
         return self.weatherList
     }
     
-    func selectedTempCity(city:String){
+    func selectedTempCity(city:String,delegate:updatedData?){
         weatherAPI.requestTempForCity(city: city){
             (weather:WeatherList?) in
             self.weatherList = weather
             DispatchQueue.main.async {
-                self.delegate?.didUpdateWeather()
+                delegate?.didUpdateWeather()
             }
         }
     }
     
-    func requestWeather(){
-        guard let location = coreLocation.getLocation() else {return}
+    func requestWeather(delegate:updatedData?){
+        guard let location = CoreLocationManagerStruct.shared.getLocation() else {return}
         weatherAPI.makeRequest(latitude:location[0] ,longitude:location[1]){ weather in
             self.weatherList = weather
             DispatchQueue.main.async {
-                self.delegate?.didUpdateWeather()
+                delegate?.didUpdateWeather()
             }
         }
+    }
+    
+    func requestWeatherCurrentLocation(delegate: updatedData?){
+        CoreLocationManagerStruct.shared.updateLocation(delegate:delegate)
     }
 }

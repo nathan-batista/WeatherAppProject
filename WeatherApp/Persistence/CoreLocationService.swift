@@ -8,29 +8,43 @@
 import Foundation
 import CoreLocation
 
-protocol didUpdateLocation{
-    func newLocationFound()
-}
+//protocol didUpdateLocation{
+//    func newLocationFound()
+//}
 
 class CoreLocationManagerStruct: NSObject, CLLocationManagerDelegate{
     private var manager = CLLocationManager()
     private var location:CLLocation?
-    var delegate:didUpdateLocation?
     
-    func setupLocation(){
+    private var delegate: updatedData?
+    
+    public static var shared = CoreLocationManagerStruct()
+    
+    
+    override init() {
+        super.init()
         manager.delegate = self
         manager.requestWhenInUseAuthorization()
-        manager.requestLocation()
+    
     }
+    
         
     //Passar a requisicao da API para um WeatherService e mudar a verificação do location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        self.location = locations.last
-        delegate?.newLocationFound()
+        if self.location != locations.last {
+            self.location = locations.last
+            manager.stopUpdatingLocation()
+            delegate?.didUpdateLocation()
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
+    }
+    
+    func updateLocation(delegate:updatedData?){
+        self.delegate = delegate
+        manager.requestLocation()
     }
     
     func getLocation() -> [Double]? {

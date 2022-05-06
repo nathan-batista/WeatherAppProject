@@ -26,10 +26,10 @@ class ViewController: UIViewController{
         searchTextField.delegate = self
         tempTable.dataSource = self
         tempTable.delegate = self
-        weatherManager.delegate = self
         //Registra o xib da celula na tabela
         tempTable.register(UINib(nibName: DateTempTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: DateTempTableViewCell.identifier)
-        weatherManager.setup(delegate: self)
+        
+        weatherManager.requestWeatherCurrentLocation(delegate:self)
         //setup de borda
         tempTable.layer.cornerRadius = 15
         //Remover a celula vazia no fim da tabela
@@ -62,6 +62,7 @@ class ViewController: UIViewController{
         if let safeText = searchTextField.text?.lowercased() {
             print(safeText)
             searchTextField.endEditing(true)
+            weatherManager.requestForCity(city: safeText,delegate:self)
         }
     }
 }
@@ -69,11 +70,15 @@ class ViewController: UIViewController{
 extension ViewController:ChooseCity {
     func didSelectCity(city: String) {
         print(city)
-        weatherManager.selectedTempCity(city:city)
+        weatherManager.selectedTempCity(city:city,delegate: self)
     }
 }
 
 extension ViewController:updatedData {
+    func didUpdateLocation() {
+        weatherManager.requestWeather(delegate: self)
+    }
+    
     func citiesFound(cidades:[City]) {
         self.resultadosBusca?.cities = cidades
         self.navigationItem.backButtonTitle = "Voltar"
@@ -88,13 +93,6 @@ extension ViewController:updatedData {
     }
 }
 
-extension ViewController:didUpdateLocation{
-    func newLocationFound() {
-        weatherManager.requestWeather()
-    }
-    
-    
-}
 
 
 

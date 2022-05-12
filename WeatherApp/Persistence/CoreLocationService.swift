@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreLocation
+import PromiseKit
 
 //protocol didUpdateLocation{
 //    func newLocationFound()
@@ -16,9 +17,11 @@ class CoreLocationManagerStruct: NSObject, CLLocationManagerDelegate{
     private var manager = CLLocationManager()
     private var location:CLLocation?
     
-    private var delegate: updatedData?
+//    private var delegate: updatedData?
     
     public static var shared = CoreLocationManagerStruct()
+    
+    private var promiseLocation: (Promise<Bool>, Resolver<Bool>)?
     
     
     override init() {
@@ -34,7 +37,8 @@ class CoreLocationManagerStruct: NSObject, CLLocationManagerDelegate{
         if self.location != locations.last {
             self.location = locations.last
             manager.stopUpdatingLocation()
-            delegate?.didUpdateLocation()
+           // delegate?.didUpdateLocation()
+            self.promiseLocation?.1.fulfill(true)
         }
     }
     
@@ -42,9 +46,11 @@ class CoreLocationManagerStruct: NSObject, CLLocationManagerDelegate{
         print(error)
     }
     
-    func updateLocation(delegate:updatedData?){
-        self.delegate = delegate
+    func updateLocation() -> Promise<Bool> {
+//        self.delegate = delegate
+        promiseLocation = Promise<Bool>.pending()
         manager.requestLocation()
+        return promiseLocation?.0 ?? Promise.value(false)
     }
     
     func getLocation() -> [Double]? {

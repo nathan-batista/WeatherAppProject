@@ -28,8 +28,6 @@ class ViewController: UIViewController{
         tempTable.delegate = self
         //Registra o xib da celula na tabela
         tempTable.register(UINib(nibName: DateTempTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: DateTempTableViewCell.identifier)
-        
-        weatherManager.requestWeatherCurrentLocation(delegate:self)
         //setup de borda
         tempTable.layer.cornerRadius = 15
         //Remover a celula vazia no fim da tabela
@@ -37,6 +35,14 @@ class ViewController: UIViewController{
         //Tamanho automatico da celula
         tempTable.rowHeight = UITableView.automaticDimension
         tempTable.estimatedRowHeight = 70
+        
+        weatherManager.requestWeatherCurrentLocation()
+            .done(on: DispatchQueue.main, flags: nil) { weather in
+            self.weather = weather
+            self.tempTable.reloadData()
+            self.reloadLabels()
+        }
+
         
         resultadosBusca = CidadesTableViewController()
         resultadosBusca?.delegate = self
@@ -62,7 +68,14 @@ class ViewController: UIViewController{
         if let safeText = searchTextField.text?.lowercased() {
             print(safeText)
             searchTextField.endEditing(true)
-            weatherManager.requestForCity(city: safeText,delegate:self)
+            weatherManager.requestForCity(city: safeText).done(on: DispatchQueue.main, flags: nil) { cities in
+                if let cidadesController = self.resultadosBusca {
+                    self.resultadosBusca?.cities = cities
+                    self.navigationItem.backButtonTitle = "Voltar"
+                    self.resultadosBusca?.tableView.reloadData()
+                    self.navigationController?.pushViewController(cidadesController, animated: true)
+                }
+            }
         }
     }
 }
@@ -70,28 +83,31 @@ class ViewController: UIViewController{
 extension ViewController:ChooseCity {
     func didSelectCity(city: String) {
         print(city)
-        weatherManager.selectedTempCity(city:city,delegate: self)
+        weatherManager.selectedTempCity(city:city).done(on: DispatchQueue.main, flags: nil) { list in
+            self.weather = list
+            self.tempTable.reloadData()
+        }
     }
 }
 
-extension ViewController:updatedData {
-    func didUpdateLocation() {
-        weatherManager.requestWeather(delegate: self)
-    }
-    
-    func citiesFound(cidades:[City]) {
-        self.resultadosBusca?.cities = cidades
-        self.navigationItem.backButtonTitle = "Voltar"
-        self.resultadosBusca?.tableView.reloadData()
-        self.navigationController?.pushViewController(self.resultadosBusca!, animated: true)
-    }
-    
-    func didUpdateWeather() {
-        self.weather = weatherManager.getWeatherList()
-        self.reloadLabels()
-        self.tempTable.reloadData()
-    }
-}
+//extension ViewController:updatedData {
+//    func didUpdateLocation() {
+//        weatherManager.requestWeather(delegate)
+//    }
+//
+//    func citiesFound(cidades:[City]) {
+//        self.resultadosBusca?.cities = cidades
+//        self.navigationItem.backButtonTitle = "Voltar"
+//        self.resultadosBusca?.tableView.reloadData()
+//        self.navigationController?.pushViewController(self.resultadosBusca!, animated: true)
+//    }
+//
+//    func didUpdateWeather() {
+//        self.weather = weatherManager.getWeatherList()
+//        self.reloadLabels()
+//        self.tempTable.reloadData()
+//    }
+//}
 
 
 

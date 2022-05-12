@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import PromiseKit
 
 protocol updatedData{
     //Atualiza UI com os novos dados
@@ -22,20 +23,35 @@ class WeatherService{
     let weatherAPI = WeatherAPI()
     private var weatherList:WeatherList? = nil
     
-    func requestForCity(city:String,delegate:updatedData?){
-        weatherAPI.requestForCities(city: city) { cities in
-            guard let safeCidades = cities else {return}
-            let cidades = safeCidades.filter{$0.`Type`.lowercased() == "city"}
-            var unique:[City] = []
-            for city in cidades{
-                if !unique.contains(city) {
-                    unique.append(city)
+    func requestForCity(city:String) -> Promise<[City]>{
+        return weatherAPI
+            .requestForCities(city: city)
+            .map{ cities in
+                let cidades = cities.filter{$0.`Type`.lowercased() == "city"}
+                var unique:[City] = []
+                for city in cidades{
+                    if !unique.contains(city) {
+                        unique.append(city)
+                    }
                 }
+                return unique
             }
-            DispatchQueue.main.async {
-                delegate?.citiesFound(cidades: unique)
-            }
-        }
+        
+//        
+//        
+//        { cities in
+//            guard let safeCidades = cities else {return}
+//            let cidades = safeCidades.filter{$0.`Type`.lowercased() == "city"}
+//            var unique:[City] = []
+//            for city in cidades{
+//                if !unique.contains(city) {
+//                    unique.append(city)
+//                }
+//            }
+//            DispatchQueue.main.async {
+//                delegate?.citiesFound(cidades: unique)
+//            }
+//        }
     }
     
     
@@ -43,27 +59,32 @@ class WeatherService{
         return self.weatherList
     }
     
-    func selectedTempCity(city:String,delegate:updatedData?){
-        weatherAPI.requestTempForCity(city: city){
-            (weather:WeatherList?) in
-            self.weatherList = weather
-            DispatchQueue.main.async {
-                delegate?.didUpdateWeather()
-            }
+    func selectedTempCity(city:String) -> Promise<WeatherList>{
+       return weatherAPI.requestTempForCity(city: city)
+//        {
+//            (weather:WeatherList?) in
+//            self.weatherList = weather
+//            DispatchQueue.main.async {
+//                delegate?.didUpdateWeather()
+//            }
+//        }
+    }
+    
+    func requestWeather() -> Promise<WeatherList>{
+        return firstly { () -> Promise<[Double]> in
+            guard let location = CoreLocationManagerStruct.shared.getLocation() else {throw APIError.invalidLocation}
+            return Promise.value(location)
+        }.then { location -> Promise<WeatherList> in
+            return self.weatherAPI.makeRequest(latitude:location[0] ,longitude:location[1])
         }
     }
     
-    func requestWeather(delegate:updatedData?){
-        guard let location = CoreLocationManagerStruct.shared.getLocation() else {return}
-        weatherAPI.makeRequest(latitude:location[0] ,longitude:location[1]){ weather in
-            self.weatherList = weather
-            DispatchQueue.main.async {
-                delegate?.didUpdateWeather()
+    func requestWeatherCurrentLocation()-> Promise<WeatherList>{
+        return CoreLocationManagerStruct
+            .shared
+            .updateLocation()
+            .then { _ -> Promise<WeatherList> in
+                self.requestWeather()
             }
-        }
-    }
-    
-    func requestWeatherCurrentLocation(delegate: updatedData?){
-        CoreLocationManagerStruct.shared.updateLocation(delegate:delegate)
     }
 }

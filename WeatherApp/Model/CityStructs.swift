@@ -6,10 +6,14 @@
 //
 
 
-struct City:Codable,Equatable{
+struct City:Codable,Hashable, Equatable {
     let Key:String
     let `Type`:String
     let LocalizedName:String
+    
+    var hashValue: Int {
+        return Key.hashValue
+    }
     
     static func == (lhs: City, rhs: City) -> Bool {
         return

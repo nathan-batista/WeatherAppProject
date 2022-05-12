@@ -11,7 +11,6 @@ import UIKit
 extension ViewController {
  
     func reloadLabels() {
-        let weather = weatherManager.getWeatherList()
         if let safeWeather = weather?.daily[0]{
             self.tempLabel.text = "\(Int(safeWeather.temp.day))ºC"
             let imageName = ImageGetter.getImage(safeWeather.weather[0])

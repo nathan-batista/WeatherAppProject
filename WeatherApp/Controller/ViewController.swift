@@ -36,6 +36,7 @@ class ViewController: UIViewController{
         tempTable.rowHeight = UITableView.automaticDimension
         tempTable.estimatedRowHeight = 70
         
+        //Após obter a ultima promise da cadeia de promises eu atualizo os dados e a view
         weatherManager.requestWeatherCurrentLocation()
             .done(on: DispatchQueue.main, flags: nil) { weather in
             self.weather = weather
@@ -68,6 +69,7 @@ class ViewController: UIViewController{
         if let safeText = searchTextField.text?.lowercased() {
             print(safeText)
             searchTextField.endEditing(true)
+            //Após receber as cidades atualizo a view q irei navegar
             weatherManager.requestForCity(city: safeText).done(on: DispatchQueue.main, flags: nil) { cities in
                 if let cidadesController = self.resultadosBusca {
                     self.resultadosBusca?.cities = cities
@@ -83,9 +85,11 @@ class ViewController: UIViewController{
 extension ViewController:ChooseCity {
     func didSelectCity(city: String) {
         print(city)
+        //Após receber a temperatura da cidade escolhida irei atualizar os dados
         weatherManager.selectedTempCity(city:city).done(on: DispatchQueue.main, flags: nil) { list in
             self.weather = list
             self.tempTable.reloadData()
+            self.reloadLabels()
         }
     }
 }

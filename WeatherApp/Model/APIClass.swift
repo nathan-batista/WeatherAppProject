@@ -15,9 +15,11 @@ enum APIError:Error {
 
 class API{
     static public func request<T:Codable>(_ url:String) -> Promise<T>{
+        //Crio uma promessa do tipo genérico e entao retorno a promessa ou um erro
         return firstly { () -> Promise<T> in
             if let safeURL = URL(string: url)  {
                 let request = URLRequest(url: safeURL)
+                //Transformo a promessa do tipo Data no tipo Genérico que desejo retornar
                 return URLSession.shared.dataTask(.promise,with: request).map{
                     (data,response) -> T in
                     let decodedData = try JSONDecoder().decode(T.self,from:data)

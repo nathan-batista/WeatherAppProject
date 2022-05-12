@@ -21,6 +21,8 @@ class CoreLocationManagerStruct: NSObject, CLLocationManagerDelegate{
     
     public static var shared = CoreLocationManagerStruct()
     
+    
+    //Mantenho uma referencia para uma promessa e um resolver para ser disparada quando for necessário
     private var promiseLocation: (Promise<Bool>, Resolver<Bool>)?
     
     
@@ -38,6 +40,8 @@ class CoreLocationManagerStruct: NSObject, CLLocationManagerDelegate{
             self.location = locations.last
             manager.stopUpdatingLocation()
            // delegate?.didUpdateLocation()
+            
+            //Aviso ao resolver para disparar que a promise foi satisfeita
             self.promiseLocation?.1.fulfill(true)
         }
     }
@@ -48,9 +52,12 @@ class CoreLocationManagerStruct: NSObject, CLLocationManagerDelegate{
     
     func updateLocation() -> Promise<Bool> {
 //        self.delegate = delegate
-        promiseLocation = Promise<Bool>.pending()
+        
+        //Crio uma promessa e um resolver para ser disparado no futuro e associo a minha referência
+        let promiseExpectation = Promise<Bool>.pending()
+        promiseLocation = promiseExpectation
         manager.requestLocation()
-        return promiseLocation?.0 ?? Promise.value(false)
+        return promiseExpectation.promise
     }
     
     func getLocation() -> [Double]? {

@@ -9,8 +9,8 @@ import UIKit
 import CoreLocation
 
 class ViewController: UIViewController{
-        
-   
+    
+    
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var weatherImage: UIImageView!
     @IBOutlet weak var tempTable: UITableView!
@@ -18,9 +18,9 @@ class ViewController: UIViewController{
     
     let weatherManager = WeatherService()
     var weather:WeatherList?
-        
+    
     var resultadosBusca:CidadesTableViewController?
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         searchTextField.delegate = self
@@ -39,23 +39,27 @@ class ViewController: UIViewController{
         //Após obter a ultima promise da cadeia de promises eu atualizo os dados e a view
         weatherManager.requestWeatherCurrentLocation()
             .done(on: DispatchQueue.main, flags: nil) { weather in
-            self.weather = weather
-            self.tempTable.reloadData()
-            self.reloadLabels()
-        }
-
+                self.weather = weather
+                self.tempTable.reloadData()
+                self.reloadLabels()
+                self.weatherManager.getCityNameForCurrentLocation()
+                    .done(on: DispatchQueue.main, flags: nil){ name in
+                        self.title = name
+                    }
+            }
+        
         
         resultadosBusca = CidadesTableViewController()
         resultadosBusca?.delegate = self
         
-
+        
         // Do any additional setup after loading the view.
     }
-        
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToTodayWeather" {
             if let destination = segue.destination as? TodayWeatherViewController,
-                let index = sender as? IndexPath{
+               let index = sender as? IndexPath{
                 let date = DateGetter.getCurrentDate()
                 let day = (date?[0] ?? 0) + index.row
                 destination.title = "Day \(day)"
@@ -86,32 +90,15 @@ extension ViewController:ChooseCity {
     func didSelectCity(city: String) {
         print(city)
         //Após receber a temperatura da cidade escolhida irei atualizar os dados
-        weatherManager.selectedTempCity(city:city).done(on: DispatchQueue.main, flags: nil) { list in
+        weatherManager.selectedTempCity(city:city.lowercased()).done(on: DispatchQueue.main, flags: nil) { list in
             self.weather = list
             self.tempTable.reloadData()
             self.reloadLabels()
+            self.title = city
         }
     }
 }
 
-//extension ViewController:updatedData {
-//    func didUpdateLocation() {
-//        weatherManager.requestWeather(delegate)
-//    }
-//
-//    func citiesFound(cidades:[City]) {
-//        self.resultadosBusca?.cities = cidades
-//        self.navigationItem.backButtonTitle = "Voltar"
-//        self.resultadosBusca?.tableView.reloadData()
-//        self.navigationController?.pushViewController(self.resultadosBusca!, animated: true)
-//    }
-//
-//    func didUpdateWeather() {
-//        self.weather = weatherManager.getWeatherList()
-//        self.reloadLabels()
-//        self.tempTable.reloadData()
-//    }
-//}
 
 
 

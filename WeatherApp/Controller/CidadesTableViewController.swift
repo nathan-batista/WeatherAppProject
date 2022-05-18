@@ -91,7 +91,7 @@ class CidadesTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let city = cities[indexPath.row]
-        delegate?.didSelectCity(city: city.LocalizedName.lowercased())
+        delegate?.didSelectCity(city: city.LocalizedName)
         self.navigationController?.popViewController(animated: true)
     }
     

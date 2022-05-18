@@ -8,15 +8,6 @@
 import Foundation
 import PromiseKit
 
-protocol updatedData{
-    //Atualiza UI com os novos dados
-    func didUpdateWeather()
-    //Atualiza as cidades obtidas
-    func citiesFound(cidades:[City])
-    //Avisa que localizacao foi obtida
-    func didUpdateLocation()
-}
-
 class WeatherService{
     
    // let coreLocation = CoreLocationManagerStruct()
@@ -37,22 +28,6 @@ class WeatherService{
                 }
                 return unique
             }
-        
-//        
-//        
-//        { cities in
-//            guard let safeCidades = cities else {return}
-//            let cidades = safeCidades.filter{$0.`Type`.lowercased() == "city"}
-//            var unique:[City] = []
-//            for city in cidades{
-//                if !unique.contains(city) {
-//                    unique.append(city)
-//                }
-//            }
-//            DispatchQueue.main.async {
-//                delegate?.citiesFound(cidades: unique)
-//            }
-//        }
     }
     
     
@@ -63,13 +38,6 @@ class WeatherService{
     func selectedTempCity(city:String) -> Promise<WeatherList>{
         //Retorno a promessa de WeatherList que irei receber da funcao requestTempForCity
        return weatherAPI.requestTempForCity(city: city)
-//        {
-//            (weather:WeatherList?) in
-//            self.weatherList = weather
-//            DispatchQueue.main.async {
-//                delegate?.didUpdateWeather()
-//            }
-//        }
     }
     
     func requestWeather() -> Promise<WeatherList>{
@@ -93,5 +61,9 @@ class WeatherService{
             .then { _ -> Promise<WeatherList> in
                 self.requestWeather()
             }
+    }
+    
+    func getCityNameForCurrentLocation() -> Promise<String>{
+        return CoreLocationManagerStruct.shared.getCityName()
     }
 }

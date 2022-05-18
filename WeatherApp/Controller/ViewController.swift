@@ -46,6 +46,12 @@ class ViewController: UIViewController{
                     .done(on: DispatchQueue.main, flags: nil){ name in
                         self.title = name
                     }
+                    .catch{ error in
+                        print(error)
+                    }
+            }
+            .catch{ error in
+                print(error)
             }
         
         

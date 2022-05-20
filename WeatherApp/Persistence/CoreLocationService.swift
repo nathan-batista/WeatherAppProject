@@ -21,35 +21,55 @@ class CoreLocationManagerStruct: NSObject, CLLocationManagerDelegate{
     
     //Mantenho uma referencia para uma promessa e um resolver para ser disparada quando for necessário
     private var promiseLocation: (Promise<Bool>, Resolver<Bool>)?
+    //Manter referencia para promessa e resolver e disparar qnd obtiver autorização da localização
+    private var promiseAuthorization: (Promise<Bool>, Resolver<Bool>)?
     
     override init() {
         super.init()
         manager.delegate = self
-        manager.requestWhenInUseAuthorization()
-        
     }
+    
     
     //Passar a requisicao da API para um WeatherService e mudar a verificação do location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if self.location != locations.last {
             self.location = locations.last
             manager.stopUpdatingLocation()
-            // delegate?.didUpdateLocation()
-            
             //Aviso ao resolver para disparar que a promise foi satisfeita
             self.promiseLocation?.1.fulfill(true)
         }
     }
     
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        switch (manager.authorizationStatus) {
+            //Verifico se obtive autorizacao e digo q promessa foi satisfeita
+        case .authorizedAlways, .authorizedWhenInUse:
+            self.promiseAuthorization?.1.fulfill(true)
+            break
+        default:
+            return
+        }
+    }
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
+        let status: CLAuthorizationStatus = manager.authorizationStatus
+        print(status.rawValue)
+    }
+    
+    func requestLocation() -> Promise<Bool> {
+        //Solicito autorizacao e crio promessa para ser disparada futuramente
+        manager.requestWhenInUseAuthorization()
+        let promiseAuth = Promise<Bool>.pending()
+        promiseAuthorization = promiseAuth
+        return promiseAuth.promise
     }
     
     func updateLocation() -> Promise<Bool> {
         //Crio uma promessa e um resolver para ser disparado no futuro e associo a minha referência
+        manager.requestLocation()
         let promiseExpectation = Promise<Bool>.pending()
         promiseLocation = promiseExpectation
-        manager.requestLocation()
         return promiseExpectation.promise
     }
     

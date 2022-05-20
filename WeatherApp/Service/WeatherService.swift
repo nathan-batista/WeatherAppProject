@@ -56,11 +56,20 @@ class WeatherService{
         //Terei uma promise para me avisar quando a localizaçao foi obtida
         return CoreLocationManagerStruct
             .shared
-            .updateLocation()
-        //Ao obter a localização realizo uma chamada para obter a temperatura
+            .requestLocation()
+            .then { _ -> Promise<Bool> in
+                CoreLocationManagerStruct.shared.updateLocation()
+            }
             .then { _ -> Promise<WeatherList> in
                 self.requestWeather()
             }
+//        return CoreLocationManagerStruct
+//            .shared
+//            .updateLocation()
+//        //Ao obter a localização realizo uma chamada para obter a temperatura
+//            .then { _ -> Promise<WeatherList> in
+//                self.requestWeather()
+//            }
     }
     
     func getCityNameForCurrentLocation() -> Promise<String>{

@@ -33,8 +33,8 @@ class DateTempTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    func configure(_ date:[Int], model:WeatherAPIDataDay?) {
-        dayLabel.text = "\(date[0])"
+    func configure(_ date: Int, model:WeatherAPIDataDay?) {
+        dayLabel.text = "\(date)"
         if let model = model {
             let imageName = ImageGetter.getImage(model.weather[0])
             tempImageView.image = UIImage(systemName: imageName)?.withTintColor(.label, renderingMode: .alwaysOriginal)

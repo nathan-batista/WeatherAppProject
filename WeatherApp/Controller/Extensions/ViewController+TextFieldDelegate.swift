@@ -9,7 +9,7 @@ import UIKit
 
 extension ViewController:UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if let safeText = textField.text?.lowercased(){
+        if let safeText = textField.text?.lowercased().replacingOccurrences(of: " ", with: "&"){
             print(safeText)
             self.view.endEditing(true)
             weatherManager.requestForCity(city: safeText,delegate: self)

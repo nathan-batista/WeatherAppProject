@@ -26,6 +26,14 @@ struct DateGetter {
         }
         return nil
     }
+    
+    static func getDayByOffset(offset: Int) -> Int {
+        var today = NSDate()
+        var res = today.addingTimeInterval(Double(offset)*24*60*60)
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.day], from: res as Date)
+        return components.day!
+    }
 }
 
 struct ImageGetter{

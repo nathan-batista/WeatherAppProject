@@ -59,7 +59,7 @@ class ViewController: UIViewController{
     
     
     @IBAction func tappedSearch(_ sender: Any) {
-        if let safeText = searchTextField.text?.lowercased() {
+        if let safeText = searchTextField.text?.lowercased().replacingOccurrences(of: " ", with: "&") {
             print(safeText)
             searchTextField.endEditing(true)
             weatherManager.requestForCity(city: safeText,delegate:self)
@@ -70,6 +70,7 @@ class ViewController: UIViewController{
 extension ViewController:ChooseCity {
     func didSelectCity(city: String) {
         print(city)
+        let safeCity = city.replacingOccurrences(of: " ", with: "&")
         weatherManager.selectedTempCity(city:city,delegate: self)
     }
 }

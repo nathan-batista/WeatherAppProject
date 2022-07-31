@@ -16,10 +16,11 @@ extension ViewController:UITableViewDataSource , UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: DateTempTableViewCell.identifier) as! DateTempTableViewCell
-        var date = DateGetter.getCurrentDate()
-        let day = date?[0] ?? 0
-        date?[0] = day + indexPath.row
-        cell.configure(date ?? [0], model: weather?.daily[indexPath.row])
+//        var date = DateGetter.getCurrentDate()
+//        let day = date?[0] ?? 0
+//        date?[0] = day + indexPath.row
+        let date = DateGetter.getDayByOffset(offset: indexPath.row)
+        cell.configure(date, model: weather?.daily[indexPath.row])
         //Remover background cinza quando selecionado
         cell.selectionStyle = .none
         return cell

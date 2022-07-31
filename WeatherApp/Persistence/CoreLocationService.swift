@@ -38,6 +38,15 @@ class CoreLocationManagerStruct: NSObject, CLLocationManagerDelegate{
         }
     }
     
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .notDetermined, .restricted, .denied:
+            break
+        case .authorizedAlways, .authorizedWhenInUse, .authorized:
+            manager.requestLocation()
+        }
+    }
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
     }

@@ -16,7 +16,6 @@ extension ViewController {
             self.tempLabel.text = "\(Int(safeWeather.temp.day))ºC"
             let imageName = ImageGetter.getImage(safeWeather.weather[0])
             weatherImage.image = UIImage(systemName: imageName)?.withTintColor(.label, renderingMode: .alwaysOriginal)
-            self.navigationItem.title = "\(safeWeather.weather[0].main)"
         }
     }
 }

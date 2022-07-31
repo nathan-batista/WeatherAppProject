@@ -22,7 +22,8 @@ struct WeatherAPI {
     //Uso de PromiseKit do framework Combine
     func requestTempForCity(city:String,completion:@escaping (WeatherList?) -> Void) {
         var coordinate:Coordinates?
-        let url = "https://api.openweathermap.org/data/2.5/weather?q=\(city)&appid=\(APIKey.key.rawValue)"
+        let safeCity = city.folding(options: .diacriticInsensitive, locale: Locale.current).replacingOccurrences(of: " ", with: "&")
+        let url = "https://api.openweathermap.org/data/2.5/weather?q=\(safeCity)&appid=\(APIKey.key.rawValue)"
         API.request(url){ (weather:WeatherCurrent?) in
             coordinate = weather?.coord
             DispatchQueue.main.async {

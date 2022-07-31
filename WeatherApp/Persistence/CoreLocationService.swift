@@ -60,5 +60,22 @@ class CoreLocationManagerStruct: NSObject, CLLocationManagerDelegate{
         guard let safeLocation = location else {return nil}
         return [safeLocation.coordinate.latitude,safeLocation.coordinate.longitude]
     }
+    
+    func getCityNameForCurrentLocation(completion: @escaping (String) -> Void){
+        if let safeLocation = self.location {
+            let geoCoder = CLGeocoder()
+            geoCoder.reverseGeocodeLocation(safeLocation){ placemark,error in
+                //Aciono um resolve que resolvera a promessa seja com sucesso ou erro(placemark caso sucesso/error caso falhe)
+                if let error=error {
+                    print(error.localizedDescription)
+                    return
+                }
+                if let placemarks = placemark {
+                    let cityName = placemarks[0].locality ?? "Temperatura"
+                    completion(cityName)
+                }
+            }
+        }
+    }
 }
 

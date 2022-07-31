@@ -69,15 +69,19 @@ class ViewController: UIViewController{
 
 extension ViewController:ChooseCity {
     func didSelectCity(city: String) {
-        print(city)
-        let safeCity = city.replacingOccurrences(of: " ", with: "&")
+        self.title = city
         weatherManager.selectedTempCity(city:city,delegate: self)
     }
 }
 
 extension ViewController:updatedData {
+    func getCurrentCityName(cityName: String) {
+        self.title = cityName
+    }
+    
     func didUpdateLocation() {
         weatherManager.requestWeather(delegate: self)
+        weatherManager.getCityName(delegate: self)
     }
     
     func citiesFound(cidades:[City]) {

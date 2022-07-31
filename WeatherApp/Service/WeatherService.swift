@@ -14,6 +14,8 @@ protocol updatedData{
     func citiesFound(cidades:[City])
     //Avisa que localizacao foi obtida
     func didUpdateLocation()
+    //Avisa que pegou o nome da cidade da localização Atual
+    func getCurrentCityName(cityName: String)
 }
 
 class WeatherService{
@@ -65,5 +67,11 @@ class WeatherService{
     
     func requestWeatherCurrentLocation(delegate: updatedData?){
         CoreLocationManagerStruct.shared.updateLocation(delegate:delegate)
+    }
+    
+    func getCityName(delegate: updatedData?) {
+        CoreLocationManagerStruct.shared.getCityNameForCurrentLocation { city in
+            delegate?.getCurrentCityName(cityName: city)
+        }
     }
 }

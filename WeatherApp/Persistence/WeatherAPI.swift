@@ -40,6 +40,7 @@ class WeatherAPI {
     
     func requestForCities(city:String) -> Future<[City],Error>{
         
+        //Porque ele funciona mesmo sem eu ter nenhum cancellable?
         let url = "https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=\(APIKey.cityAPIKey.rawValue)&q=\(city)&language=pt-br"
         //Recebo uma promise com as cidades da pesquisa
         let future: Future<[City],Error> = API.shared.request(url)
@@ -48,14 +49,13 @@ class WeatherAPI {
         
     }
     
-    //Uso de PromiseKit do framework Combine
     func requestTempForCity(city:String) -> Future<WeatherList,Error> {
         let url = "https://api.openweathermap.org/data/2.5/weather?q=\(city)&appid=\(APIKey.key.rawValue)"
         
-        //Obtenho a promise do tipo weatherCurrent com os dados da minha cidade atual
         
         //Após a promise ser cumprida utilizo a localização obtida para fazer request da temperatura
         return Future<WeatherList, Error> { promise in
+            //Obtenho a promise do tipo weatherCurrent com os dados da minha cidade atual
             API.shared.request(url)
                 .sink { completion in
                     if case .failure(let error) = completion {
@@ -82,62 +82,7 @@ class WeatherAPI {
                 }
                 .store(in: &self.cancellable)
         }
-        
-        //            .map { city in
-        //                self.makeRequest(latitude: city.coord.lat,
-        //                                 longitude: city.coord.lon)
-        //                .sink(receiveCompletion: { (completion in)
-        //                    if case let .failure(error) = completion {
-        //                        switch error {
-        //                        case let decodingError as DecodingError:
-        //                            return decodingError)
-        //                        case let apiError as APIError:
-        //                            return apiError
-        //                        default:
-        //                            return APIError.unknown
-        //                        }
-        //                    }
-        //                }, receiveValue: {weatherList in
-        //
-        //                })
-        //            }
-        
-        
-        //            .flatMap { city in
-        //                self.makeRequest(latitude: city.coord.lat,
-        //                                 longitude: city.coord.lon)
-        //            }
-        
-        
-        //            .map{ (city: WeatherCurrent) -> Future<WeatherList,Error> in
-        //                self.makeRequest(latitude: city.coord.lat,
-        //                                 longitude: city.coord.lon)
-        //            }
     }
     
-    
-    
-    //        {(city:WeatherCurrent) -> Promise<WeatherList>
-    //
-    //            self.makeRequest(latitude: city.coord.lat, longitude: city.coord.lon)
-    //
-    //        }
-    
-    //                .done { (decodedData:WeatherCurrent) in
-    //                    coordinate = decodedData.coord
-    //                    makeRequest(latitude: coordinate?.lat ?? 0, longitude: coordinate?.lon ?? 0)
-    //                }.catch {error in
-    //                    print(error)
-    //                }
-    
-    
-    //        { (weather:WeatherCurrent?) in
-    //            coordinate = weather?.coord
-    //            DispatchQueue.main.async {
-    //                if let safeCoordinates = coordinate {
-    //                    makeRequest(latitude: safeCoordinates.lat, longitude: safeCoordinates.lon, completion: completion)
-    //                }
-    //            }
-    //        }
 }
 

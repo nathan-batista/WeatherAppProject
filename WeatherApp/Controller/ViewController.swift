@@ -51,28 +51,8 @@ class ViewController: UIViewController{
             })
             .store(in: &cancellables)
         
-        
-//        weatherManager.requestWeatherCurrentLocation()
-//            .done(on: DispatchQueue.main, flags: nil) { weather in
-//                self.weather = weather
-//                self.tempTable.reloadData()
-//                self.reloadLabels()
-//                self.weatherManager.getCityNameForCurrentLocation()
-//                    .done(on: DispatchQueue.main, flags: nil){ name in
-//                        self.title = name
-//                    }
-//                    .catch{ error in
-//                        print(error)
-//                    }
-//            }
-//            .catch{ error in
-//                print(error)
-//            }
-        
-        
         resultadosBusca = CidadesTableViewController()
         resultadosBusca?.delegate = self
-        
         
         // Do any additional setup after loading the view.
     }
@@ -110,16 +90,6 @@ class ViewController: UIViewController{
                         }
                     }
                 })
-            
-            
-//            weatherManager.requestForCity(city: safeText).done(on: DispatchQueue.main, flags: nil) { cities in
-//                if let cidadesController = self.resultadosBusca {
-//                    self.resultadosBusca?.cities = cities
-//                    self.navigationItem.backButtonTitle = "Voltar"
-//                    self.resultadosBusca?.tableView.reloadData()
-//                    self.navigationController?.pushViewController(cidadesController, animated: true)
-//                }
-//            }
         }
     }
 }
@@ -141,16 +111,6 @@ extension ViewController:ChooseCity {
                 self.title = city
             }
             .store(in: &cancellables)
-
-            
-        
-        
-//        weatherManager.selectedTempCity(city:city.lowercased()).done(on: DispatchQueue.main, flags: nil) { list in
-//            self.weather = list
-//            self.tempTable.reloadData()
-//            self.reloadLabels()
-//            self.title = city
-//        }
     }
 }
 

@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreLocation
+import Combine
 
 class ViewController: UIViewController{
     
@@ -18,6 +19,7 @@ class ViewController: UIViewController{
     
     let weatherManager = WeatherService()
     var weather:WeatherList?
+    var cancellables = Set<AnyCancellable>()
     
     var resultadosBusca:CidadesTableViewController?
     
@@ -37,22 +39,35 @@ class ViewController: UIViewController{
         tempTable.estimatedRowHeight = 70
         
         //Após obter a ultima promise da cadeia de promises eu atualizo os dados e a view
-        weatherManager.requestWeatherCurrentLocation()
-            .done(on: DispatchQueue.main, flags: nil) { weather in
-                self.weather = weather
-                self.tempTable.reloadData()
-                self.reloadLabels()
-                self.weatherManager.getCityNameForCurrentLocation()
-                    .done(on: DispatchQueue.main, flags: nil){ name in
-                        self.title = name
+        weatherManager.$weatherList
+            .sink(receiveValue: { weather in
+                if let safeWeather = weather {
+                    DispatchQueue.main.async {
+                        self.weather = safeWeather
+                        self.reloadLabels()
+                        self.tempTable.reloadData()
                     }
-                    .catch{ error in
-                        print(error)
-                    }
-            }
-            .catch{ error in
-                print(error)
-            }
+                }
+            })
+            .store(in: &cancellables)
+        
+        
+//        weatherManager.requestWeatherCurrentLocation()
+//            .done(on: DispatchQueue.main, flags: nil) { weather in
+//                self.weather = weather
+//                self.tempTable.reloadData()
+//                self.reloadLabels()
+//                self.weatherManager.getCityNameForCurrentLocation()
+//                    .done(on: DispatchQueue.main, flags: nil){ name in
+//                        self.title = name
+//                    }
+//                    .catch{ error in
+//                        print(error)
+//                    }
+//            }
+//            .catch{ error in
+//                print(error)
+//            }
         
         
         resultadosBusca = CidadesTableViewController()
@@ -80,14 +95,31 @@ class ViewController: UIViewController{
             print(safeText)
             searchTextField.endEditing(true)
             //Após receber as cidades atualizo a view q irei navegar
-            weatherManager.requestForCity(city: safeText).done(on: DispatchQueue.main, flags: nil) { cities in
-                if let cidadesController = self.resultadosBusca {
-                    self.resultadosBusca?.cities = cities
-                    self.navigationItem.backButtonTitle = "Voltar"
-                    self.resultadosBusca?.tableView.reloadData()
-                    self.navigationController?.pushViewController(cidadesController, animated: true)
-                }
-            }
+            weatherManager.requestForCity(city: safeText)
+                .catch({ error -> Just<[City]> in
+                    print(error)
+                    return Just([])
+                })
+                .sink(receiveValue: { cities in
+                    if let cidadesController = self.resultadosBusca {
+                        if !cities.isEmpty {
+                            self.resultadosBusca?.cities = cities
+                            self.navigationItem.backButtonTitle = "Voltar"
+                            self.resultadosBusca?.tableView.reloadData()
+                            self.navigationController?.pushViewController(cidadesController, animated: true)
+                        }
+                    }
+                })
+            
+            
+//            weatherManager.requestForCity(city: safeText).done(on: DispatchQueue.main, flags: nil) { cities in
+//                if let cidadesController = self.resultadosBusca {
+//                    self.resultadosBusca?.cities = cities
+//                    self.navigationItem.backButtonTitle = "Voltar"
+//                    self.resultadosBusca?.tableView.reloadData()
+//                    self.navigationController?.pushViewController(cidadesController, animated: true)
+//                }
+//            }
         }
     }
 }
@@ -96,12 +128,29 @@ extension ViewController:ChooseCity {
     func didSelectCity(city: String) {
         print(city)
         //Após receber a temperatura da cidade escolhida irei atualizar os dados
-        weatherManager.selectedTempCity(city:city.lowercased()).done(on: DispatchQueue.main, flags: nil) { list in
-            self.weather = list
-            self.tempTable.reloadData()
-            self.reloadLabels()
-            self.title = city
-        }
+        weatherManager.selectedTempCity(city: city.lowercased())
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                if case .failure(let error) = completion {
+                    print(error)
+                }
+            } receiveValue: { list in
+                self.weather = list
+                self.tempTable.reloadData()
+                self.reloadLabels()
+                self.title = city
+            }
+            .store(in: &cancellables)
+
+            
+        
+        
+//        weatherManager.selectedTempCity(city:city.lowercased()).done(on: DispatchQueue.main, flags: nil) { list in
+//            self.weather = list
+//            self.tempTable.reloadData()
+//            self.reloadLabels()
+//            self.title = city
+//        }
     }
 }
 

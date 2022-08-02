@@ -2,7 +2,9 @@ WeatherApp/Model/MyAPI.swift
 *.xcodeproj/*
 !*.xcodeproj/project.pbxproj
 !*.xcodeproj/xcshareddata
-
+Pods/
+Podfile.lock
+WeatherApp.xcworkspace
 #
 # *.lock - this is used and abused by many editors for many different 
 things.

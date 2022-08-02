@@ -16,8 +16,7 @@ struct City:Codable,Hashable, Equatable {
     }
     
     static func == (lhs: City, rhs: City) -> Bool {
-        return
-        lhs.LocalizedName == rhs.LocalizedName
+        return lhs.LocalizedName == rhs.LocalizedName
     }
 }
 

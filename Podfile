@@ -6,6 +6,5 @@ target 'WeatherApp' do
   use_frameworks!
 
   # Pods for WeatherApp
-  pod "PromiseKit", "~>6.8"
-
+ 
 end
